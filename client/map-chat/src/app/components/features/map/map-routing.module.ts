@@ -1,5 +1,5 @@
 import { Route, RouterModule } from "@angular/router";
-import { MapComponent } from './map/map.component';
+import { MapComponent } from './components/map/map.component';
 import { NgModule } from '@angular/core';
 
 const routes: Route[] = [

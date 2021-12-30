@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { MapModule } from './map/map.module';
+import { MapModule } from './components/features/map/map.module';
+import { AppComponent } from './components/app.component';
 
 @NgModule({
   declarations: [

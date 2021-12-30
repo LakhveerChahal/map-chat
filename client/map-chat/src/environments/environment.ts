@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  mapboxAccesToken: 'pk.eyJ1IjoibGFraHZlZXItY2hhaGFsIiwiYSI6ImNreG12aDR1MjAyanEydW9lYnRwcm5iM2UifQ.cJwGUZI0HFDVFxkRlLypzw'
+  mapboxAccesToken: 'pk.eyJ1IjoibGFraHZlZXItY2hhaGFsIiwiYSI6ImNreG12M3MxYjBxNG8ycGtvdTZhM2d3NGsifQ.PJWMHzFUX0g0yxT_3YY-6Q'
 };
 
 /*

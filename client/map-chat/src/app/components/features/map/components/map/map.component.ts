@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { constants } from '../shared/constants';
-import { BaseMap } from '../shared/base-map';
-import { Marker } from '../models/marker.model';
+import { constants } from '../../shared/constants';
+import { BaseMap } from '../../shared/base-map';
+import { Marker } from '../../models/marker.model';
 import { of, Observable } from 'rxjs';
 
 @Component({

@@ -1,10 +1,12 @@
 import { NgModule } from "@angular/core";
-import { MapComponent } from './map/map.component';
 import { MapRoutingModule } from './map-routing.module';
+import { MapComponent } from './components/map/map.component';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
     declarations: [
-        MapComponent
+        MapComponent,
+        UserComponent,
     ],
     imports: [
         MapRoutingModule
