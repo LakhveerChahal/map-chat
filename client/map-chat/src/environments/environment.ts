@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  baseUrl: 'http://localhost:3000',
   mapboxAccesToken: 'pk.eyJ1IjoibGFraHZlZXItY2hhaGFsIiwiYSI6ImNreG12M3MxYjBxNG8ycGtvdTZhM2d3NGsifQ.PJWMHzFUX0g0yxT_3YY-6Q'
 };
 

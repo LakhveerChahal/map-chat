@@ -9,5 +9,9 @@ export const constants = {
         },
         zoom: 9,
         accessToken: environment.mapboxAccesToken,
-    }
+    },
+    userUrl: 'user',
+    signupUrl: 'signup',
+    signinUrl: 'signin',
+    signoutUrl: 'signout'
 };

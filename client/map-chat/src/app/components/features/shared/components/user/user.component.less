@@ -1,0 +1,37 @@
+.modal-wrapper {
+    height: 50vh;
+    width: 30vw;
+    top: 25vh;
+    left: 35vw;
+    position: absolute;
+    background-color: white;
+    z-index: 2;
+    border-radius: 1rem;
+    box-shadow: lightpink 0 0 5px 5px;
+
+    .signin-modal, .signup-modal {
+        margin-left: 3rem;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        .form-group {
+            margin-bottom: 1rem;
+            label{
+                display: block;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: large;
+            }
+            input {
+                padding: 0.5em;
+                font-size: large;
+                border-radius: 0;
+                margin: 0.5rem 0;
+            }
+        }
+        .alter-link {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+    
+}

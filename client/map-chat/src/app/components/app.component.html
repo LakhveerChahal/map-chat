@@ -1,1 +1,6 @@
+<div class="sign-in">
+    <button (click)="toggleSignIn()">{{ showSignIn ? 'Sign in' : 'Sign out' }}</button>
+</div>
+
+<app-user *ngIf="showSignInDialog" (userLoginEvent)="userLoginEvent($event)"></app-user>
 <router-outlet></router-outlet>

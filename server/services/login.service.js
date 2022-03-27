@@ -20,7 +20,7 @@ const signup = async (email, password) => {
         await user.save();
 
         // Create token
-        const token = jwt.sign(
+        return jwt.sign(
             { user_id: user._id, email },
             process.env.JWT_TOKEN_KEY,
             {
@@ -28,11 +28,6 @@ const signup = async (email, password) => {
             }
         );
 
-        const res = {
-            token: token,
-            email: email,
-        }
-        return res;
     } catch (error) {
         console.log(error);
         throw error;
@@ -49,28 +44,21 @@ const getUser = async (email) => {
 
 const getLoggedInUser = async (email, password) => {
     try {
-        let loggedInUser = null;
         const user = await getUser(email);
 
         // check if user exists and confirm password
         if (!(user && await bcrypt.compare(password, user.password))) {
-            return loggedInUser;
+            return null;
         }
 
         // create token
-        const token = jwt.sign(
+        return jwt.sign(
             { user_id: user.id, email },
             process.env.JWT_TOKEN_KEY,
             {
                 expiresIn: "2h"
             }
         );
-
-        loggedInUser = {
-            token,
-            email
-        }
-        return loggedInUser;
     } catch (error) {
         console.log(error);
     }

@@ -1,9 +1,9 @@
 const loginService = require('../services/login.service');
 
 const signup = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, pwd } = req.body;
 
-    if (!(email && password)) {
+    if (!(email && pwd)) {
         return res.status(400).send('Invalid data provided.');
     }
 
@@ -14,30 +14,39 @@ const signup = async (req, res) => {
     }
     // create user
     try {
-        const user = await loginService.signup(email, password);
+        const token = await loginService.signup(email, pwd);
 
-        res.status(201).json(user);
+        res.cookie("SESSIONID", token, { httpOnly: true }).status(201).send();
     } catch (error) {
+        console.log(error);
         res.status(500).send('Some error occured at the backend');
     }
 };
 
-const login = async (req, res) => {
-    const { email, password } = req.body;
-    if (!(email && password)) {
+const signin = async (req, res) => {
+    const { email, pwd } = req.body;
+    if (!(email && pwd)) {
         return res.status(400).send('Invalid data provided.');
     }
 
-    const loggedInUser = await loginService.getLoggedInUser(email, password);
+    const token = await loginService.getLoggedInUser(email, pwd);
 
-    if (loggedInUser) {
-        res.send(loggedInUser);
+    if (token) {
+        res.cookie("SESSIONID", token, { httpOnly: true }).send();
     } else {
         res.status(401).send('Invalid user credentials');
     }
 };
 
+const signout = async (req, res) => {
+    return res
+        .clearCookie("SESSIONID")
+        .status(200)
+        .json({ message: "Successfully logged out" });
+};
+
 module.exports = {
-    login,
-    signup
+    signin,
+    signup,
+    signout
 };

@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { MapRoutingModule } from './map-routing.module';
 import { MapComponent } from './components/map/map.component';
-import { UserComponent } from './components/user/user.component';
+import { SearchFriendsComponent } from './components/search-friends/search-friends.component';
 
 @NgModule({
     declarations: [
         MapComponent,
-        UserComponent,
+        SearchFriendsComponent,
     ],
     imports: [
         MapRoutingModule

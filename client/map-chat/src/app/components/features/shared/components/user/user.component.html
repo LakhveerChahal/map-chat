@@ -1,0 +1,36 @@
+<div class="modal-wrapper">
+    <div class="signin-modal" *ngIf="signInForm">
+        <form (ngSubmit)="onSignIn()" #loginForm="ngForm">
+            <h3>Sign In</h3>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control" required [(ngModel)]="signinEmail">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" required
+                    [(ngModel)]="signinPwd">
+            </div>
+            <button type="submit" [disabled]="loginForm.form.invalid">Sign In</button>
+            <a (click)="toggleForm()" class="alter-link">New User? Sign Up</a>
+
+        </form>
+    </div>
+
+    <div class="signup-modal" *ngIf="!signInForm">
+        <form (ngSubmit)="onSignUp()" #signupForm="ngForm">
+            <h3>Sign Up</h3>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control" required [(ngModel)]="signupEmail">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" required [(ngModel)]="signupPwd">
+            </div>
+            <button type="submit" [disabled]="signupForm.form.invalid">Sign Up</button>
+            <a class="alter-link" (click)="toggleForm()">Already a user? Login here</a>
+        </form>
+    </div>
+
+</div>
