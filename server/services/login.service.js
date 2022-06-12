@@ -11,10 +11,11 @@ const signup = async (email, password) => {
         const user = new User({
             _id: new mongoose.Types.ObjectId(),
             name: email,
-            email: email,
+            email,
             password: hashedPassword,
-            lat: 0,
-            lng: 0
+            lat: 40 + Math.random(),
+            lng: -74 + Math.random(),
+            isOnline: true
         });
 
         await user.save();

@@ -8,10 +8,11 @@ export const constants = {
             lat: 40
         },
         zoom: 9,
-        accessToken: environment.mapboxAccesToken,
+        accessToken: environment.mapboxAccessToken,
     },
     userUrl: 'user',
     signupUrl: 'signup',
     signinUrl: 'signin',
-    signoutUrl: 'signout'
+    signoutUrl: 'signout',
+    friendsUrl: 'friends'
 };

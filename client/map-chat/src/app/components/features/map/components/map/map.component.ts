@@ -3,6 +3,9 @@ import { constants } from '../../shared/constants';
 import { BaseMap } from '../../shared/base-map';
 import { Marker } from '../../models/marker.model';
 import { of, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { MapApiService } from '@features/map/services/map-api.service';
+import { User } from '@features/shared/models/user.model';
 
 @Component({
   selector: 'app-map',
@@ -12,7 +15,9 @@ import { of, Observable } from 'rxjs';
 export class MapComponent implements OnInit {
   map: BaseMap | undefined;
   
-  constructor() {
+  constructor(
+    public mapApiService: MapApiService
+  ) {
   }
 
   ngOnInit(): void {
@@ -24,19 +29,13 @@ export class MapComponent implements OnInit {
   }
 
   showMarkers(): void {
-    this.getDummyMarkersData().subscribe((markers: Marker[]) => {
+    this.mapApiService.getFriends()
+    .pipe(
+      map((friends: User[]) => friends.map(f => new Marker(f.lat, f.lng, f.isOnline)))
+    )
+    .subscribe((markers: Marker[]) => {
       this.map?.addUserMarkers(markers);
     });
-  }
-
-  getDummyMarkersData(): Observable<Marker[]> {
-    const mockData = [];
-    for (let index = 0; index < 10; index++) {
-      const rand = Math.random();
-      const element = new Marker(40 + rand, -74.5 + rand, 70, 70, index % 2 == 0);
-      mockData.push(element);
-    }
-    return of(mockData);
   }
 
 }

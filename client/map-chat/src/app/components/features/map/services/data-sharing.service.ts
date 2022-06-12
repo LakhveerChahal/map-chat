@@ -6,7 +6,7 @@ import { User } from '../../shared/models/user.model';
     providedIn: 'root'
 })
 export class DataSharingService {
-    private loggedInUser = new BehaviorSubject<User>(new User('', '', '', ''));
+    private loggedInUser = new BehaviorSubject<User>(new User('', '', '', '', 0, 0, true));
 
     public getLoggedInUser(): BehaviorSubject<User> {
         return this.loggedInUser;

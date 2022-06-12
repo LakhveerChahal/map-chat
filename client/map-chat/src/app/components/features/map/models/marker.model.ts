@@ -3,8 +3,8 @@ export class Marker {
     constructor(
         public lat: number,
         public lng: number,
-        public width: number,
-        public height: number,
-        public isOnline: boolean
+        public isOnline: boolean,
+        public width: number = 70,
+        public height: number = 70,
     ) { }
 }

@@ -26,13 +26,13 @@ export class UserComponent implements OnInit {
 
   onSignIn(): void {
     this.commonApiService.signIn(this.signinEmail, this.signinPwd).subscribe(() => {
-      this.userLoginEvent.emit(new User('', this.signinEmail, this.signinEmail, ''));
+      this.userLoginEvent.emit(new User('', this.signinEmail, this.signinEmail, '', 0, 0, true));
     });
   }
 
   onSignUp(): void {
     this.commonApiService.signUp(this.signupEmail, this.signupPwd).subscribe((loggedInUser) => {
-      this.userLoginEvent.emit(new User('', this.signinEmail, this.signinEmail, ''));
+      this.userLoginEvent.emit(new User('', this.signinEmail, this.signinEmail, '', 0, 0, true));
     });
   }
 

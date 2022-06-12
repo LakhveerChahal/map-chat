@@ -19,4 +19,8 @@ export class UrlFormationService {
     getSignoutUrl(): string {
         return `${this.baseUrl}/${constants.userUrl}/${constants.signoutUrl}`;
     }
+
+    getFriendsUrl(): string {
+        return `${this.baseUrl}/${constants.friendsUrl}`;
+    }
 }
