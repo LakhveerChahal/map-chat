@@ -16,7 +16,7 @@ const signup = async (req, res) => {
     try {
         const token = await loginService.signup(email, pwd);
 
-        res.cookie("SESSIONID", token, { httpOnly: true }).status(201).send();
+        res.cookie("SESSIONID", token, { httpOnly: true }).status(201).send(token);
     } catch (error) {
         console.log(error);
         res.status(500).send('Some error occured at the backend');
@@ -32,7 +32,7 @@ const signin = async (req, res) => {
     const token = await loginService.getLoggedInUser(email, pwd);
 
     if (token) {
-        res.cookie("SESSIONID", token, { httpOnly: true }).send();
+        res.cookie("SESSIONID", token, { httpOnly: true }).send(token);
     } else {
         res.status(401).send('Invalid user credentials');
     }

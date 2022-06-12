@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MapModule } from './components/features/map/map.module';
 import { AppComponent } from './components/app.component';
 import { SharedModule } from '@features/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { SharedModule } from '@features/shared/shared.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     MapModule,
     SharedModule
   ],

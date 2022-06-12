@@ -12,12 +12,18 @@ export class CommonApiService {
         public http: HttpClient
     ) { }
 
-    signUp(email: string, pwd: string): Observable<void> {
-        return this.http.post<void>(this.urlFormationService.getSignupUrl(), { email, pwd }, { withCredentials: true });
+    signUp(email: string, pwd: string): Observable<string> {
+        return this.http.post<string>(this.urlFormationService.getSignupUrl(), { email, pwd }, { 
+            withCredentials: true,
+            responseType: 'text' as 'json'
+        });
     }
 
-    signIn(email: string, pwd: string): Observable<void> {
-        return this.http.post<void>(this.urlFormationService.getSigninUrl(), { email, pwd }, { withCredentials: true });
+    signIn(email: string, pwd: string): Observable<string> {
+        return this.http.post<string>(this.urlFormationService.getSigninUrl(), { email, pwd }, { 
+            withCredentials: true,
+            responseType: 'text' as 'json'
+        });
     }
 
     signOut(): Observable<void> {

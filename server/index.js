@@ -1,4 +1,4 @@
-const httpServer = require('./app');
+const httpServer = require('./socket');
 
 const port = process.env.PORT || 3000;
 
