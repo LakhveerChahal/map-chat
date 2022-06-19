@@ -12,7 +12,12 @@ export class UserPreferenceService {
         sessionStorage.setItem('session', token);
     }
 
-    getSessionToken(): string | null {
-        return sessionStorage.getItem('session');
+    getSessionToken(): string {
+        const token = sessionStorage.getItem('session');
+        return token != null ? token : '';
+    }
+
+    clearSessionToken(): void {
+        sessionStorage.removeItem('session');
     }
 }

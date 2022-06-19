@@ -12,4 +12,8 @@ export class BaseMap extends mapboxgl.Map {
         UserMarkerLayer.removeAllMarkers();
         UserMarkerLayer.addMarkers(markers, this);
     }
+
+    removeAllMarkers(): void {
+        UserMarkerLayer.removeAllMarkers();
+    }
 }

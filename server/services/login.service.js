@@ -15,7 +15,8 @@ const signup = async (email, password) => {
             password: hashedPassword,
             lat: 40 + Math.random(),
             lng: -74 + Math.random(),
-            isOnline: true
+            isOnline: true,
+            friends: []
         });
 
         await user.save();

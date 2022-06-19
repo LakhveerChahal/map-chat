@@ -6,13 +6,13 @@ import { User } from '../../shared/models/user.model';
     providedIn: 'root'
 })
 export class DataSharingService {
-    private loggedInUser = new BehaviorSubject<User>(new User('', '', '', '', 0, 0, true));
+    private loggedInUser = new BehaviorSubject<User | null>(null);
 
-    public getLoggedInUser(): BehaviorSubject<User> {
+    public getLoggedInUser(): BehaviorSubject<User | null> {
         return this.loggedInUser;
     }
 
-    public setLoggedInUser(user: User): void {
+    public setLoggedInUser(user: User | null): void {
         this.loggedInUser.next(user);
     }
 }

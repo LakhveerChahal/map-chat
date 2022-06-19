@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { DataSharingService } from '@features/map/services/data-sharing.service';
 import { User } from '@features/shared/models/user.model';
@@ -10,7 +10,7 @@ import { UserPreferenceService } from '@features/map/services/user-preference.se
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   showSignIn: boolean = true;
   showSignInDialog: boolean = false;
   chat: string[] = [];
@@ -43,7 +43,7 @@ export class AppComponent {
 
   registerListeners(): void {
     this.socket.on('connect', () => {
-      console.log(this.socket.id);
+      console.log('CONNECT: ' + this.socket.id);
     });
 
     this.socket.on('connect_error', () => {
@@ -52,7 +52,6 @@ export class AppComponent {
 
     this.socket.on('disconnect', () => {
       console.log(this.socket.id);
-      
     })
 
     this.socket.on('broadcast-msg', (data: string) => {
@@ -68,9 +67,10 @@ export class AppComponent {
 
   toggleSignIn(): void {
     if(!this.showSignIn) {
-      this.commonApiService.signOut().subscribe(() => {
-        this.showSignIn = true;
-      });
+      this.userPreferenceService.clearSessionToken();
+      this.disconnectSocket();
+      this.dataSharingService.setLoggedInUser(null);
+      this.showSignIn = true;
     } else {
       this.showSignInDialog = true;
     }
@@ -87,4 +87,7 @@ export class AppComponent {
     this.showSignIn = false;
   }
 
+  ngOnDestroy(): void {
+    this.disconnectSocket();
+  }
 }

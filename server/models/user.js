@@ -7,7 +7,8 @@ const userSchema = mongoose.Schema({
     password: String,
     lat: Number,
     lng: Number,
-    isOnline: Boolean
+    isOnline: Boolean,
+    friends: Array
 });
 
 module.exports = mongoose.model('User', userSchema);

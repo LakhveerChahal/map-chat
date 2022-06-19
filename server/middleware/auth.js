@@ -6,7 +6,6 @@ const authorization = (req, res, next) => {
         return res.sendStatus(403);
     }
     try {
-        console.log('Token' + token);
         const data = jwt.verify(token, process.env.JWT_TOKEN_KEY)
         const userId = data.user_id;
         const email = data.email;
