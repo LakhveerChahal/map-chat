@@ -17,7 +17,8 @@ export const constants = {
         signoutUrl: 'signout',
         friendsUrl: 'friends',
         peopleUrl: 'people',
-        peopleSearch: 'search'
+        peopleSearch: 'search',
+        request: 'request'
     },
     searchText: 'searchText',
     limit: 'limit',

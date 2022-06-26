@@ -8,6 +8,28 @@ const getFriends = async (userId) => {
     }
 };
 
+const putFriendRequest = async (friendId, userId) => {
+    try {
+        await User.findByIdAndUpdate(userId, {
+            $push: {
+                sentReq: friendId
+            }
+        });
+
+        await User.findByIdAndUpdate(friendId, {
+            $push: {
+                receivedReq: userId
+            }
+        });
+
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
+
 module.exports = {
     getFriends,
+    putFriendRequest
 };

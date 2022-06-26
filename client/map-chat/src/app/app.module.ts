@@ -6,6 +6,8 @@ import { MapModule } from './components/features/map/map.module';
 import { AppComponent } from './components/app.component';
 import { SharedModule } from '@features/shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpConfigInterceptor } from '@features/shared/http-config.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,13 @@ import { FormsModule } from '@angular/forms';
     MapModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

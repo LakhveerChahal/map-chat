@@ -19,7 +19,7 @@ export class MapApiService {
 
     getFriends(): Observable<User[]> {
         const authToken = this.userPreferenceService.getSessionToken();
-        return this.http.get<User[]>(this.urlFormationService.getFriendsUrl(), {
+        return this.http.get<User[]>(this.urlFormationService.getFriendsBaseUrl(), {
             headers: {
                 token: authToken
             }
@@ -32,8 +32,12 @@ export class MapApiService {
         params = params.append(constants.limit, limit);
         params = params.append(constants.offset, offset);
 
+        const authToken = this.userPreferenceService.getSessionToken();
         return this.http.get<User[]>(this.urlFormationService.getSearchedPeopleUrl(), {
-            params
+            headers: {
+                token: authToken
+            },
+            params,
         });
     }
 }

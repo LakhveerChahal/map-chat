@@ -6,8 +6,12 @@
             </div>
 
             <div *ngIf="loggedInUser != null && loggedInUser._id != person._id">
-                <button>Add Friend</button>
+                <button *ngIf="!person.isFriend && !person.friendReqSent && !person.friendReqReceived" 
+                    (click)="addFriend(person)">Add Friend</button>
+                <button *ngIf="person.friendReqSent">Friend Request Sent</button>
+                <button *ngIf="person.friendReqReceived">Accept Friend Request</button>
             </div>
+
         </div>
     </ng-container>
 </div>

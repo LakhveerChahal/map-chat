@@ -43,9 +43,10 @@ export class UserComponent implements OnInit {
 
   shareUser(token: string, id: string): void {
     this.userPreferenceService.setSessionToken(token);
-    const user = new User(id, this.signinEmail, this.signinEmail, '', 0, 0, true);
+    const user = new User(id, this.signinEmail, this.signinEmail, '', 0, 0, true, false, false, false);
     this.userLoginEvent.emit(user);
     this.dataSharingService.setLoggedInUser(user);
+    this.dataSharingService.setPeopleSearchString('');
   }
 
   toggleForm(): void {

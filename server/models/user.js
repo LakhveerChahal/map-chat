@@ -8,7 +8,9 @@ const userSchema = mongoose.Schema({
     lat: Number,
     lng: Number,
     isOnline: Boolean,
-    friends: Array
+    friends: Array,
+    receivedReq: Array,
+    sentReq: Array
 });
 
 module.exports = mongoose.model('User', userSchema);

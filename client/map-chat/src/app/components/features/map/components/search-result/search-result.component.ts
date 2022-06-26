@@ -5,6 +5,7 @@ import { User } from '@features/shared/models/user.model';
 import { MapApiService } from '@features/map/services/map-api.service';
 import { constants } from '@features/map/shared/constants';
 import { takeUntil } from 'rxjs/operators';
+import { FriendsApiService } from '@features/map/services/friends-api.service';
 
 @Component({
   selector: 'app-search-result',
@@ -23,6 +24,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   constructor(
     public dataSharingService: DataSharingService,
     public mapApiService: MapApiService,
+    public friendsApiService: FriendsApiService
   ) { }
 
 
@@ -57,6 +59,12 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         console.log(people);
         this.peopleList = people;
       });
+  }
+
+  addFriend(person: User): void {
+    this.friendsApiService.sendFriendRequest(person._id).subscribe(() => {
+      person.friendReqSent = true;
+    });
   }
 
   ngOnDestroy(): void {

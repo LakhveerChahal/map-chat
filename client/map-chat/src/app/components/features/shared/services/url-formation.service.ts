@@ -8,23 +8,35 @@ import { constants } from '@features/map/shared/constants';
 export class UrlFormationService {
     baseUrl: string = environment.baseUrl;
 
-    getSignupUrl(): string {
-        return `${this.baseUrl}/${constants.url.userUrl}/${constants.url.signupUrl}`;
+    getAuthBaseUrl(): string {
+        return `${this.baseUrl}/${constants.url.userUrl}`;
     }
 
-    getSigninUrl(): string {
-        return `${this.baseUrl}/${constants.url.userUrl}/${constants.url.signinUrl}`;
-    }
-
-    getSignoutUrl(): string {
-        return `${this.baseUrl}/${constants.url.userUrl}/${constants.url.signoutUrl}`;
-    }
-
-    getFriendsUrl(): string {
+    getFriendsBaseUrl(): string {
         return `${this.baseUrl}/${constants.url.friendsUrl}`;
     }
 
+    getPeopleBaseUrl(): string {
+        return `${this.baseUrl}/${constants.url.peopleUrl}`;
+    }
+
+    getSignupUrl(): string {
+        return `${this.getAuthBaseUrl()}/${constants.url.signupUrl}`;
+    }
+
+    getSigninUrl(): string {
+        return `${this.getAuthBaseUrl()}/${constants.url.signinUrl}`;
+    }
+
+    getSignoutUrl(): string {
+        return `${this.getAuthBaseUrl()}/${constants.url.signoutUrl}`;
+    }
+
+    getPutFriendRequestUrl(friendId: string): string {
+        return `${this.getFriendsBaseUrl()}/${constants.url.request}/${friendId}`;
+    }
+
     getSearchedPeopleUrl(): string {
-        return `${this.baseUrl}/${constants.url.peopleUrl}/${constants.url.peopleSearch}`;
+        return `${this.getPeopleBaseUrl()}/${constants.url.peopleSearch}`;
     }
 }
