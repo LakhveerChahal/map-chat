@@ -1,4 +1,6 @@
 <div class="modal-wrapper">
+    <a href="javascript://" class="close-btn" (click)="closePanel()">X</a>
+
     <div class="signin-modal" *ngIf="signInForm">
         <form (ngSubmit)="onSignIn()" #loginForm="ngForm">
             <h3>Sign In</h3>

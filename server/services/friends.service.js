@@ -9,5 +9,5 @@ const getFriends = async (userId) => {
 };
 
 module.exports = {
-    getFriends
+    getFriends,
 };

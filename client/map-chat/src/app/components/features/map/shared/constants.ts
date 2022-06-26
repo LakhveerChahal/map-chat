@@ -10,9 +10,17 @@ export const constants = {
         zoom: 9,
         accessToken: environment.mapboxAccessToken,
     },
-    userUrl: 'user',
-    signupUrl: 'signup',
-    signinUrl: 'signin',
-    signoutUrl: 'signout',
-    friendsUrl: 'friends'
+    url: {
+        userUrl: 'user',
+        signupUrl: 'signup',
+        signinUrl: 'signin',
+        signoutUrl: 'signout',
+        friendsUrl: 'friends',
+        peopleUrl: 'people',
+        peopleSearch: 'search'
+    },
+    searchText: 'searchText',
+    limit: 'limit',
+    offset: 'offset',
+    defaultLimit: 10,
 };

@@ -14,7 +14,10 @@ import { BrowserModule } from '@angular/platform-browser';
         HttpClientModule
     ],
     exports: [
-        UserComponent
+        UserComponent,
+        BrowserModule,
+        FormsModule,
+        HttpClientModule
     ]
 })
 export class SharedModule { }

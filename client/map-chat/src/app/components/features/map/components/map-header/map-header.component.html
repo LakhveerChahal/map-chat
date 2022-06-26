@@ -1,0 +1,17 @@
+<div class="header-wrapper">
+    <div class="padding-0-1">
+        <app-search-people></app-search-people>
+    </div>
+
+    <div class="sign-in">
+        <button (click)="toggleSignIn()">{{ showSignIn ? 'Sign in' : 'Sign out' }}</button>
+    </div>
+</div>
+
+
+
+<app-user *ngIf="showSignInDialog" 
+(userLoginEvent)="userLoginEvent($event)"
+(closePanelEmitter)="showSignInDialog = false"
+>
+</app-user>

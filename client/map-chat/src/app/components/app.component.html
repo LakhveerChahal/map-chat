@@ -1,15 +1,1 @@
-<div class="sign-in">
-    <button (click)="toggleSignIn()">{{ showSignIn ? 'Sign in' : 'Sign out' }}</button>
-</div>
-<div *ngFor="let msg of chat" style="position: relative; z-index: 2;">
-    <p style="display: block; padding: 10px; background-color: black; color: white;">{{ msg }}</p>
-</div>
-<form (ngSubmit)="onSubmit()" #chatForm="ngForm" style="z-index: 2; position: absolute;">
-    <div class="form-group">
-        <input type="text" 
-            name="msg" id="msg"
-            class="form-control" [(ngModel)]="msg">
-    </div>
-</form>
-<app-user *ngIf="showSignInDialog" (userLoginEvent)="userLoginEvent($event)"></app-user>
 <router-outlet></router-outlet>

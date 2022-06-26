@@ -9,18 +9,22 @@ export class UrlFormationService {
     baseUrl: string = environment.baseUrl;
 
     getSignupUrl(): string {
-        return `${this.baseUrl}/${constants.userUrl}/${constants.signupUrl}`;
+        return `${this.baseUrl}/${constants.url.userUrl}/${constants.url.signupUrl}`;
     }
 
     getSigninUrl(): string {
-        return `${this.baseUrl}/${constants.userUrl}/${constants.signinUrl}`;
+        return `${this.baseUrl}/${constants.url.userUrl}/${constants.url.signinUrl}`;
     }
 
     getSignoutUrl(): string {
-        return `${this.baseUrl}/${constants.userUrl}/${constants.signoutUrl}`;
+        return `${this.baseUrl}/${constants.url.userUrl}/${constants.url.signoutUrl}`;
     }
 
     getFriendsUrl(): string {
-        return `${this.baseUrl}/${constants.friendsUrl}`;
+        return `${this.baseUrl}/${constants.url.friendsUrl}`;
+    }
+
+    getSearchedPeopleUrl(): string {
+        return `${this.baseUrl}/${constants.url.peopleUrl}/${constants.url.peopleSearch}`;
     }
 }

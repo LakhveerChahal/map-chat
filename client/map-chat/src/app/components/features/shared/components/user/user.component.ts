@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   signupEmail: string = '';
   signupPwd: string = '';
 
+  @Output('closePanelEmitter') closePanelEmitter = new EventEmitter<void>();
   @Output('userLoginEvent') userLoginEvent = new EventEmitter<User>();
 
   constructor(
@@ -49,6 +50,10 @@ export class UserComponent implements OnInit {
 
   toggleForm(): void {
     this.signInForm = !this.signInForm;
+  }
+
+  closePanel(): void {
+    this.closePanelEmitter.emit();
   }
 
 }

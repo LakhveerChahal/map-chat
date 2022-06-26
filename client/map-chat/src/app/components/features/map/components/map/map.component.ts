@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { constants } from '../../shared/constants';
 import { BaseMap } from '../../shared/base-map';
-import { Marker } from '../../models/marker.model';
-import { of, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { MapApiService } from '@features/map/services/map-api.service';
-import { User } from '@features/shared/models/user.model';
 import { DataSharingService } from '@features/map/services/data-sharing.service';
+import { MapApiService } from '@features/map/services/map-api.service';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { constants } from '../../shared/constants';
+import { Marker } from '../../models/marker.model';
+import { User } from '@features/shared/models/user.model';
 
 @Component({
   selector: 'app-map',
@@ -25,7 +26,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.map = new BaseMap({
-      ...constants.defaultMapConfig, 
+      ...constants.defaultMapConfig,
       container: 'map'
     });
 
