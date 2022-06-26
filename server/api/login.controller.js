@@ -14,9 +14,9 @@ const signup = async (req, res) => {
     }
     // create user
     try {
-        const token = await loginService.signup(email, pwd);
+        const tokenAndId = await loginService.signup(email, pwd);
 
-        res.cookie("SESSIONID", token, { httpOnly: true }).status(201).send(token);
+        res.cookie("SESSIONID", tokenAndId.token, { httpOnly: true }).status(201).send(tokenAndId);
     } catch (error) {
         console.log(error);
         res.status(500).send('Some error occured at the backend');
@@ -29,10 +29,10 @@ const signin = async (req, res) => {
         return res.status(400).send('Invalid data provided.');
     }
 
-    const token = await loginService.getLoggedInUser(email, pwd);
+    const tokenAndId = await loginService.getLoggedInUser(email, pwd);
 
-    if (token) {
-        res.cookie("SESSIONID", token, { httpOnly: true }).send(token);
+    if (tokenAndId) {
+        res.cookie("SESSIONID", tokenAndId.token, { httpOnly: true }).send(tokenAndId);
     } else {
         res.status(401).send('Invalid user credentials');
     }

@@ -4,6 +4,7 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { constants } from '@features/map/shared/constants';
 import { MapApiService } from '@features/map/services/map-api.service';
 import { User } from '@features/shared/models/user.model';
+import { DataSharingService } from '@features/map/services/data-sharing.service';
 
 @Component({
   selector: 'app-search-people',
@@ -13,12 +14,9 @@ import { User } from '@features/shared/models/user.model';
 export class SearchPeopleComponent implements OnInit, AfterViewInit {
   @ViewChild('peopleSearch') peopleSearchInput: ElementRef<HTMLInputElement> | undefined;
   searchEmitter: Subject<string> = new Subject<string>();
-  limit: number = constants.defaultLimit;
-  offset: number = 0;
-  peopleList: User[] = [];
 
   constructor(
-    public mapApiService: MapApiService
+    public dataSharingService: DataSharingService,
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +32,7 @@ export class SearchPeopleComponent implements OnInit, AfterViewInit {
     this.searchEmitter
     .pipe(debounceTime(500), distinctUntilChanged())
     .subscribe((searchString: string) => {
-      this.searchPeople(searchString);
+      this.dataSharingService.setPeopleSearchString(searchString);
     });
 
     this.peopleSearchInput.nativeElement.onkeyup = () => {
@@ -43,19 +41,4 @@ export class SearchPeopleComponent implements OnInit, AfterViewInit {
       this.searchEmitter.next(searchValue);
     };
   }
-
-  searchPeople(searchString: string): void {
-    if(searchString == '') {
-      this.peopleList = [];
-      return;
-    }
-
-    this.mapApiService.getPeopleOnSearch(searchString, this.limit, this.offset)
-    .pipe(takeUntil(this.searchEmitter))
-    .subscribe((people: User[]) => {
-      console.log(people);
-      this.peopleList = people;
-    });
-  }
-
 }

@@ -22,13 +22,18 @@ const signup = async (email, password) => {
         await user.save();
 
         // Create token
-        return jwt.sign(
+        const token = jwt.sign(
             { user_id: user._id, email },
             process.env.JWT_TOKEN_KEY,
             {
                 expiresIn: "2h"
             }
         );
+
+        return {
+            token,
+            _id: user._id
+        };
 
     } catch (error) {
         console.log(error);
@@ -54,13 +59,18 @@ const getLoggedInUser = async (email, password) => {
         }
 
         // create token
-        return jwt.sign(
+        const token = jwt.sign(
             { user_id: user.id, email },
             process.env.JWT_TOKEN_KEY,
             {
                 expiresIn: "2h"
             }
         );
+
+        return {
+            token,
+            _id: user._id
+        };
     } catch (error) {
         console.log(error);
     }

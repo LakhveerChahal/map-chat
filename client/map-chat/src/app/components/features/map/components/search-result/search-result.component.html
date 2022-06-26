@@ -1,0 +1,13 @@
+<div class="people-list-wrapper" *ngIf="peopleList.length > 0">
+    <ng-container *ngFor="let person of peopleList">
+        <div class="row">
+            <div>
+                {{ person.name }}
+            </div>
+
+            <div *ngIf="loggedInUser != null && loggedInUser._id != person._id">
+                <button>Add Friend</button>
+            </div>
+        </div>
+    </ng-container>
+</div>

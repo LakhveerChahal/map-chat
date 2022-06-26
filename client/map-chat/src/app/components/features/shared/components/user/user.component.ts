@@ -30,20 +30,20 @@ export class UserComponent implements OnInit {
   }
 
   onSignIn(): void {
-    this.commonApiService.signIn(this.signinEmail, this.signinPwd).subscribe((token: string) => {
-      this.shareUser(token);
+    this.commonApiService.signIn(this.signinEmail, this.signinPwd).subscribe((res: { token: string, _id: string }) => {
+      this.shareUser(res.token, res._id);
     });
   }
 
   onSignUp(): void {
-    this.commonApiService.signUp(this.signupEmail, this.signupPwd).subscribe((token: string) => {
-      this.shareUser(token);
+    this.commonApiService.signUp(this.signupEmail, this.signupPwd).subscribe((res: { token: string, _id: string }) => {
+      this.shareUser(res.token, res._id);
     });
   }
 
-  shareUser(token: string): void {
+  shareUser(token: string, id: string): void {
     this.userPreferenceService.setSessionToken(token);
-    const user = new User('', this.signinEmail, this.signinEmail, '', 0, 0, true);
+    const user = new User(id, this.signinEmail, this.signinEmail, '', 0, 0, true);
     this.userLoginEvent.emit(user);
     this.dataSharingService.setLoggedInUser(user);
   }
