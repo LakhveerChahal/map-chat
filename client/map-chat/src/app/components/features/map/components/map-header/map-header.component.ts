@@ -14,7 +14,7 @@ import { User } from '@features/shared/models/user.model';
 export class MapHeaderComponent implements OnInit, OnDestroy {
   showSignIn: boolean = true;
   showSignInDialog: boolean = false;
-  socket: Socket | any;
+  socket: Socket | undefined;
 
   constructor(
     public dataSharingService: DataSharingService,
@@ -39,8 +39,12 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
 
 
   registerListeners(): void {
+    if(!this.socket) { return; }
+
     this.socket.on('connect', () => {
-      console.log('CONNECT: ' + this.socket.id);
+      if(!this.socket) { return; }
+
+      this.dataSharingService.shareSocket(this.socket);
     });
 
     this.socket.on('connect_error', () => {
@@ -48,16 +52,17 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
     })
 
     this.socket.on('disconnect', () => {
-      console.log(this.socket.id);
     })
 
-    this.socket.on('broadcast-msg', (data: string) => {
-      console.log('DATA: ' + data);
+    this.socket.on('users', (socketMapArray: any[]) => {
+      const socketMap = new Map<string, string>(socketMapArray);
+      this.dataSharingService.setSocketMap(socketMap);
     })
-
   }
 
   disconnectSocket(): void {
+    if(!this.socket) { return; }
+
     this.socket.disconnect();
   }
 

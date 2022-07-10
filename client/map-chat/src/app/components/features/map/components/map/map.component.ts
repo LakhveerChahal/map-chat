@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
 import { BaseMap } from '../../shared/base-map';
 import { DataSharingService } from '@features/map/services/data-sharing.service';
 import { MapApiService } from '@features/map/services/map-api.service';
@@ -17,10 +17,12 @@ import { User } from '@features/shared/models/user.model';
 export class MapComponent implements OnInit, OnDestroy {
   map: BaseMap | undefined;
   subscription = new Subscription();
+  user: User | null = null;
   
   constructor(
     public mapApiService: MapApiService,
-    public dataSharingService: DataSharingService
+    public dataSharingService: DataSharingService,
+    public viewContainerRef: ViewContainerRef
   ) {
   }
 
@@ -28,9 +30,10 @@ export class MapComponent implements OnInit, OnDestroy {
     this.map = new BaseMap({
       ...constants.defaultMapConfig,
       container: 'map'
-    });
+    }, this.viewContainerRef);
 
     this.subscription.add(this.dataSharingService.getLoggedInUser().subscribe((user: User | null) => {
+      this.user = user;
       if(!user) {
         this.removeAllMarkers();
         return;
@@ -43,10 +46,12 @@ export class MapComponent implements OnInit, OnDestroy {
   showMarkers(): void {
     this.mapApiService.getFriends()
     .pipe(
-      map((friends: User[]) => friends.map(f => new Marker(f.lat, f.lng, f.isOnline)))
+      map((friends: User[]) => friends.map(f => new Marker(f._id, f.name, f.lat, f.lng, f.isOnline)))
     )
     .subscribe((markers: Marker[]) => {
-      this.map?.addUserMarkers(markers);
+      if(this.user == null) { return; }
+      
+      this.map?.addUserMarkers(markers, this.user);
     });
   }
 

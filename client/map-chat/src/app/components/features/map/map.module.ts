@@ -6,6 +6,7 @@ import { SharedModule } from '@features/shared/shared.module';
 import { SearchPeopleComponent } from './components/search-people/search-people.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { MapLayerComponent } from './components/map-layer/map-layer.component';
+import { MarkerPopupComponent } from './components/marker-popup/marker-popup.component';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { MapLayerComponent } from './components/map-layer/map-layer.component';
         MapHeaderComponent,
         SearchResultComponent,
         MapLayerComponent,
+        MarkerPopupComponent,
     ],
     imports: [
         MapRoutingModule,

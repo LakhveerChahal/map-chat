@@ -1,0 +1,14 @@
+<div class="pop-up-wrapper">
+    <p>{{ marker?.name }}</p>
+
+    <div *ngFor="let message of messages" class="message-wrapper">
+        <div [ngClass]="{'right-align': message.userId === user?._id}">
+            {{ message.text }}
+        </div>
+    </div>
+
+    <form>
+        <input type="text" name="new-msg" id="new-msg" #newMsg>
+        <button type="submit" (click)="onSubmit(newMsg)">Send</button>
+    </form>
+</div>

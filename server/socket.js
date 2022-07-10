@@ -23,6 +23,7 @@ io
         const data = jwt.verify(token, process.env.JWT_TOKEN_KEY)
         const userId = data.user_id;
         socket.userId = userId;
+        socketMap.set(userId, socket.id);
         next();
     } catch (error) {
         console.error(error);
@@ -32,15 +33,21 @@ io
     console.log('Connected Count: ' + io.engine.clientsCount);
     console.log('USERID: ' + socket.userId);
 
-    socket.on('msg', (data, to) => {
-        console.log(data);
-        io.emit('broadcast-msg', data);
-    })
+    socket.on('pvt msg', ({ content, to }) => {
+
+        socket.to(socketMap.get(to)).emit('pvt msg', {
+            content,
+            from: socket.userId,
+        });
+    });
 
     socket.on('disconnect', (reason) => {
         console.log('DISCONNECTED:' + reason);
+        socketMap.delete(socket.userId);
     })
 
+    io.emit('users', [...socketMap]);
+    // socket.emit('users', [...socketMap]);
 });
 
 module.exports = httpServer;
