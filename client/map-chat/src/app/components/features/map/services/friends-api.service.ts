@@ -17,4 +17,8 @@ export class FriendsApiService {
     sendFriendRequest(friendId: string): Observable<void> {
         return this.http.put<void>(this.urlFormationService.getPutFriendRequestUrl(friendId), {});
     }
+
+    acceptFriendRequest(friendId: string): Observable<void> {
+        return this.http.put<void>(this.urlFormationService.getPutAcceptFriendRequestUrl(friendId), {});
+    }
 }

@@ -36,6 +36,10 @@ export class UrlFormationService {
         return `${this.getFriendsBaseUrl()}/${constants.url.request}/${friendId}`;
     }
 
+    getPutAcceptFriendRequestUrl(friendId: string): string {
+        return `${this.getFriendsBaseUrl()}/${constants.url.acceptRequest}/${friendId}`;
+    }
+
     getSearchedPeopleUrl(): string {
         return `${this.getPeopleBaseUrl()}/${constants.url.peopleSearch}`;
     }

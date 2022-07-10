@@ -9,7 +9,8 @@
                 <button *ngIf="!person.isFriend && !person.friendReqSent && !person.friendReqReceived" 
                     (click)="addFriend(person)">Add Friend</button>
                 <button *ngIf="person.friendReqSent">Friend Request Sent</button>
-                <button *ngIf="person.friendReqReceived">Accept Friend Request</button>
+                <button *ngIf="person.friendReqReceived"
+                    (click)="acceptFriendRequest(person)">Accept Friend Request</button>
             </div>
 
         </div>

@@ -28,8 +28,24 @@ const putFriendRequest = async (req, res) => {
     }
 }
 
+const acceptFriendRequest = async (req, res) => {
+    const userId = getUserIdFromReq(req);
+    const friendId = req.params.friendId;
+
+    if (!userId || !friendId) {
+        res.status(401).send();
+    }
+
+    const result = await friendsService.acceptFriendRequest(friendId, userId);
+    if (result) {
+        res.status(201).send();
+    } else {
+        res.status(500).send();
+    }
+}
 
 module.exports = {
     getFriends,
-    putFriendRequest
+    putFriendRequest,
+    acceptFriendRequest
 };

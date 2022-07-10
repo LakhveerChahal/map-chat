@@ -9,5 +9,6 @@ router.use('/request/:friendId', hardAuthorization);
 
 router.route('/').get(friendsController.getFriends);
 router.route('/request/:friendId').put(friendsController.putFriendRequest);
+router.route('/accept-request/:friendId').put(friendsController.acceptFriendRequest);
 
 module.exports = router;

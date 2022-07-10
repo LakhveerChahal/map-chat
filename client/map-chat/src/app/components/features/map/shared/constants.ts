@@ -18,7 +18,8 @@ export const constants = {
         friendsUrl: 'friends',
         peopleUrl: 'people',
         peopleSearch: 'search',
-        request: 'request'
+        request: 'request',
+        acceptRequest: 'accept-request',
     },
     searchText: 'searchText',
     limit: 'limit',

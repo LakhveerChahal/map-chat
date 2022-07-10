@@ -67,6 +67,13 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     });
   }
 
+  acceptFriendRequest(person: User): void {
+    this.friendsApiService.acceptFriendRequest(person._id).subscribe(() => {
+      person.isFriend = true;
+      person.friendReqReceived = false;
+    });
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
