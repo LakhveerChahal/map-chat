@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "backend support for map-chat application",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "build": "gulp",
     "start": "node index.js",

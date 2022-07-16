@@ -5,8 +5,8 @@ const log = require('fancy-log');
 var exec = require('child_process').exec;
 
 const paths = {
-    ang_src: 'client/',
-    ang_dist_src: 'client/dist/map-chat/**/*',
+    ang_src: 'client/map-chat/',
+    ang_dist_src: 'client/map-chat/dist/map-chat/**/*',
     ang_dist_dest: 'public/',
 }
 
@@ -27,9 +27,18 @@ function createBuildFolder() {
     return Promise.resolve('created build folder if it was needed!');
 }
 
+function installAngularCLI(cb) {
+    log('installing Angular CLI globally...');
+    return exec(`cd ${paths.ang_src} && npm install -g @angular/cli`, function (err, stdout, stderr) {
+        log(stdout);
+        log(stderr);
+        cb(err);
+    })
+}
+
 function buildAngularCodeTask(cb) {
     log('building Angular code into the directory');
-    return exec(`cd ${paths.ang_src} && npm install -g @angular/cli && npm install && ng build --prod`, function (err, stdout, stderr) {
+    return exec(`cd ${paths.ang_src} && npm install && ng build --configuration=production`, function (err, stdout, stderr) {
         log(stdout);
         log(stderr);
         cb(err);
@@ -50,6 +59,7 @@ function deleteNodeModules() {
 exports.default = series(
     clean,
     createBuildFolder,
+    installAngularCLI,
     buildAngularCodeTask,
     copyAngularCodeTask,
     deleteNodeModules,
