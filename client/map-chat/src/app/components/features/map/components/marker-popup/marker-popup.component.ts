@@ -16,7 +16,7 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
   @Input() user: User | undefined;
   messages: Message[] = [];
   subscription = new Subscription();
-  socket: Socket | undefined;
+  socket: Socket | null = null;
   socketMap = new Map<string, string>();
 
   constructor(
@@ -28,7 +28,7 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.subscription.add(
-      this.dataSharingService.getSocket().subscribe((socket: Socket) => {
+      this.dataSharingService.getSocket().subscribe((socket: Socket | null) => {
         this.socket = socket;
       })
     );

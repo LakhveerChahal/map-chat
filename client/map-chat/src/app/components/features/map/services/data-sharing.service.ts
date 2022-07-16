@@ -9,7 +9,7 @@ import { Socket } from 'socket.io-client';
 export class DataSharingService {
     private loggedInUser = new BehaviorSubject<User | null>(null);
     private searchString = new ReplaySubject<string>(1);
-    private socket = new ReplaySubject<Socket>(1);
+    private socket = new ReplaySubject<Socket | null>(1);
     private socketMap = new ReplaySubject<Map<string, string>>(1);
 
     public getLoggedInUser(): BehaviorSubject<User | null> {
@@ -28,11 +28,11 @@ export class DataSharingService {
         this.searchString.next(searchString);
     }
 
-    public shareSocket(socket: Socket): void {
+    public shareSocket(socket: Socket | null): void {
         this.socket.next(socket);
     }
 
-    public getSocket(): ReplaySubject<Socket> {
+    public getSocket(): ReplaySubject<Socket| null> {
         return this.socket;
     }
 

@@ -41,9 +41,11 @@ const signup = async (email, password) => {
     }
 };
 
-const getUser = async (email) => {
+const getUser = async (email, id) => {
     try {
-        return await User.findOne({ email });
+        return await User.findOne()
+            .or([{email}, {_id: id}])
+            .select('_id name lat lng isOnline email password');
     } catch (error) {
         console.log(error);
     }
@@ -51,8 +53,7 @@ const getUser = async (email) => {
 
 const getLoggedInUser = async (email, password) => {
     try {
-        const user = await getUser(email);
-
+        const user = await getUser(email, null);
         // check if user exists and confirm password
         if (!(user && await bcrypt.compare(password, user.password))) {
             return null;
@@ -60,7 +61,7 @@ const getLoggedInUser = async (email, password) => {
 
         // create token
         const token = jwt.sign(
-            { user_id: user.id, email },
+            { user_id: user._id, email },
             process.env.JWT_TOKEN_KEY,
             {
                 expiresIn: "2h"
@@ -73,6 +74,7 @@ const getLoggedInUser = async (email, password) => {
         };
     } catch (error) {
         console.log(error);
+        return null;
     }
 };
 

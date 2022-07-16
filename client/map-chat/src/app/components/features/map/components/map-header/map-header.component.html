@@ -1,17 +1,21 @@
 <div class="header-wrapper">
-    <div class="padding-0-1">
-        <app-search-people></app-search-people>
+    <div class="left-section">
+        <app-user-profile [loggedInUser]="loggedInUser"></app-user-profile>
     </div>
 
-    <div class="sign-in">
-        <button (click)="toggleSignIn()">{{ showSignIn ? 'Sign in' : 'Sign out' }}</button>
+    <div class="right-section">
+        <div class="padding-0-1">
+            <app-search-people></app-search-people>
+        </div>
+
+        <div class="sign-in">
+            <button (click)="toggleSignIn()">{{ showSignIn ? 'Sign in' : 'Sign out' }}</button>
+        </div>
     </div>
+
 </div>
 
 
-
-<app-user *ngIf="showSignInDialog" 
-(userLoginEvent)="userLoginEvent($event)"
-(closePanelEmitter)="showSignInDialog = false"
->
+<app-user *ngIf="showSignInDialog" (userLoginEvent)="userLoginEvent($event)"
+    (closePanelEmitter)="showSignInDialog = false">
 </app-user>

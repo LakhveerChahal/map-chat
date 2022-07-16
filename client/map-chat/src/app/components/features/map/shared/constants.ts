@@ -15,6 +15,7 @@ export const constants = {
         signupUrl: 'signup',
         signinUrl: 'signin',
         signoutUrl: 'signout',
+        authenticateUrl: 'authenticate',
         friendsUrl: 'friends',
         peopleUrl: 'people',
         peopleSearch: 'search',

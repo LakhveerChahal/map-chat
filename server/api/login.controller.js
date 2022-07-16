@@ -45,8 +45,19 @@ const signout = async (req, res) => {
         .json({ message: "Successfully logged out" });
 };
 
+const authenticateSessionToken = async (req, res) => {
+    const userId = req.userId;
+    if(!userId) {
+        return res.status(401).send('Invalid session token');
+    }
+
+    const user = await loginService.getUser(null, userId);
+    return res.send(user);
+}
+
 module.exports = {
     signin,
     signup,
-    signout
+    signout,
+    authenticateSessionToken
 };

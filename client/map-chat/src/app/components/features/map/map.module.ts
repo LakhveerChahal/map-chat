@@ -7,6 +7,7 @@ import { SearchPeopleComponent } from './components/search-people/search-people.
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { MapLayerComponent } from './components/map-layer/map-layer.component';
 import { MarkerPopupComponent } from './components/marker-popup/marker-popup.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { MarkerPopupComponent } from './components/marker-popup/marker-popup.com
         SearchResultComponent,
         MapLayerComponent,
         MarkerPopupComponent,
+        UserProfileComponent,
     ],
     imports: [
         MapRoutingModule,

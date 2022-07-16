@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UrlFormationService } from './url-formation.service';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -26,5 +27,9 @@ export class CommonApiService {
 
     signOut(): Observable<void> {
         return this.http.get<void>(this.urlFormationService.getSignoutUrl(), { withCredentials: true });
+    }
+
+    authenticateSession(): Observable<User> {
+        return this.http.get<User>(this.urlFormationService.getAuthenticateUrl());
     }
 }

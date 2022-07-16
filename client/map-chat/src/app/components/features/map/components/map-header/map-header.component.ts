@@ -4,6 +4,8 @@ import { DataSharingService } from '@features/map/services/data-sharing.service'
 import { CommonApiService } from '@features/shared/services/common-api.service';
 import { UserPreferenceService } from '@features/map/services/user-preference.service';
 import { User } from '@features/shared/models/user.model';
+import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -14,7 +16,9 @@ import { User } from '@features/shared/models/user.model';
 export class MapHeaderComponent implements OnInit, OnDestroy {
   showSignIn: boolean = true;
   showSignInDialog: boolean = false;
-  socket: Socket | undefined;
+  socket: Socket | null = null;
+  loggedInUser: User | null = null;
+  subscription = new Subscription();
 
   constructor(
     public dataSharingService: DataSharingService,
@@ -23,11 +27,19 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.subscription.add(
+      this.dataSharingService.getLoggedInUser().subscribe((user: User | null) => {
+        this.userLoginEvent(user);
+      })
+    );
   }
 
 
   establishSocket(): void {
-    this.socket = io('http://localhost:3000', {
+    // socket already exists
+    if(this.socket) { return; }
+
+    this.socket = io(environment.baseUrl, {
       reconnectionAttempts: 0,
       auth: {
         token: this.userPreferenceService.getSessionToken()
@@ -64,6 +76,8 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
     if(!this.socket) { return; }
 
     this.socket.disconnect();
+    this.socket = null;
+    this.dataSharingService.shareSocket(this.socket);
   }
 
   toggleSignIn(): void {
@@ -77,7 +91,9 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  userLoginEvent(loggedInUser: User): void {
+  // can get called from datashareingservice and Output event at the same time
+  userLoginEvent(loggedInUser: User | null): void {
+    this.loggedInUser = loggedInUser;
     if (!loggedInUser) {
       this.disconnectSocket();
       return;
