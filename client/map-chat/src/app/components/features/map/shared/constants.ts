@@ -18,6 +18,7 @@ export const constants = {
         authenticateUrl: 'authenticate',
         friendsUrl: 'friends',
         peopleUrl: 'people',
+        chatUrl: 'chat',
         peopleSearch: 'search',
         request: 'request',
         acceptRequest: 'accept-request',

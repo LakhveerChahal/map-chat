@@ -1,4 +1,6 @@
 import { NgModule } from "@angular/core";
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
+
 import { MapRoutingModule } from './map-routing.module';
 import { MapComponent } from './components/map/map.component';
 import { MapHeaderComponent } from './components/map-header/map-header.component';
@@ -21,7 +23,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     ],
     imports: [
         MapRoutingModule,
-        SharedModule
+        SharedModule,
+        InfiniteScrollModule
     ]
 })
 export class MapModule { }

@@ -68,6 +68,8 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
 
     this.socket.on('users', (socketMapArray: any[]) => {
       const socketMap = new Map<string, string>(socketMapArray);
+      console.log(socketMap);
+      
       this.dataSharingService.setSocketMap(socketMap);
     })
   }

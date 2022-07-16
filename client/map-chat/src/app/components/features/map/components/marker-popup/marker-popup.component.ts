@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Marker } from '@features/map/models/marker.model';
 import { Message } from '@features/map/models/message.model';
 import { Subscription } from 'rxjs';
 import { User } from '@features/shared/models/user.model';
 import { DataSharingService } from '@features/map/services/data-sharing.service';
 import { Socket } from 'socket.io-client';
+import { ChatApiService } from '@features/map/services/chat-api.service';
 
 @Component({
   selector: 'app-marker-popup',
@@ -20,12 +21,12 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
   socketMap = new Map<string, string>();
 
   constructor(
-    public dataSharingService: DataSharingService
+    public dataSharingService: DataSharingService,
+    public chatApiService: ChatApiService
   ) {
     
   }
 
-  
   ngOnInit(): void {
     this.subscription.add(
       this.dataSharingService.getSocket().subscribe((socket: Socket | null) => {
@@ -39,10 +40,23 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
       })
     );
     this.registerSocketListeners();
+
+    this.fetchChat();
   }
 
-  onSubmit(newMsgRef: HTMLInputElement): void {
-    this.sendMessage(newMsgRef);
+  fetchChat(): void {
+    if(!this.marker || !this.user) { return; }
+
+    const user2 = this.marker.id;
+    const offset = this.messages.length;
+
+    this.chatApiService.fetchChat(user2, offset).subscribe((msgs: Message[]) => {
+      this.messages.splice(0, 0, ...msgs);
+    });
+  }
+
+  onSubmit(newMsgRef: HTMLInputElement, msgList: HTMLDivElement): void {
+    this.sendMessage(newMsgRef, msgList);
     newMsgRef.value = '';
   }
 
@@ -56,7 +70,7 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
     });
   }
 
-  sendMessage(newMsgRef: HTMLInputElement): void {
+  sendMessage(newMsgRef: HTMLInputElement, msgList: HTMLDivElement): void {
     const newMsgText: string | undefined = newMsgRef.value;
 
     if(this.user == null || newMsgText == undefined || this.marker == undefined) { return; }
@@ -66,8 +80,22 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
       content: newMsgText,
       to: this.marker.id
     });
+    this.scrollToBottom(msgList);
   }
-  
+
+  onScroll(): void {
+    this.fetchChat();
+  }
+
+  scrollToBottom(element: HTMLDivElement): void {
+    setTimeout(() => {
+      const scrollHeight = element.scrollHeight;
+      element.scrollTo({
+        top: scrollHeight
+      });
+    }, 100);
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

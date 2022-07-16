@@ -1,14 +1,23 @@
+<!-- NOTE: if modifying the classes here, it will affect the open event of popup present in user-marker-layer.ts -->
+
 <div class="pop-up-wrapper">
     <p>{{ marker?.name }}</p>
-
-    <div *ngFor="let message of messages" class="message-wrapper">
-        <div [ngClass]="{'right-align': message.userId === user?._id}">
-            {{ message.text }}
+    <div class="msg-list" #msgList
+        infiniteScroll
+        [scrollWindow]="false"
+        (scrolledUp)="onScroll()">
+        <div *ngFor="let message of messages" class="message-wrapper">
+            <div [ngClass]="{'right-align': message.author === user?._id}">
+                {{ message.text }}
+                <br>
+                <span>{{ message.time | date:'shortTime'}}</span>
+            </div>
         </div>
     </div>
+    
 
     <form>
         <input type="text" name="new-msg" id="new-msg" #newMsg>
-        <button type="submit" (click)="onSubmit(newMsg)">Send</button>
+        <button type="submit" (click)="onSubmit(newMsg, msgList)">Send</button>
     </form>
 </div>

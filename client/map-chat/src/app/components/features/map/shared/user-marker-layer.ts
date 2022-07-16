@@ -49,6 +49,16 @@ export class UserMarkerLayer {
                 lat: marker.lat,
                 lng: marker.lng
             })
+            .on('open', (event: any) => { 
+                const parentEl: HTMLDivElement = event.target._container.parentElement;
+                
+                const msgListEl: HTMLDivElement | null = parentEl.querySelector('.pop-up-wrapper>.msg-list');
+                if(!msgListEl) { return; }
+
+                msgListEl.scrollTo({
+                    top: msgListEl.scrollHeight
+                });
+            })
             .setDOMContent(popupComp.location.nativeElement)
         
         return popUp;

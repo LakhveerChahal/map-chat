@@ -20,6 +20,7 @@
     "@angular/router": "^14.0.1",
     "@types/mapbox-gl": "^2.6.0",
     "mapbox-gl": "^2.6.1",
+    "ngx-infinite-scroll": "^14.0.0",
     "rxjs": "~6.6.0",
     "socket.io-client": "^4.4.0",
     "tslib": "^2.3.0",

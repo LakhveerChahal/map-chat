@@ -5,6 +5,7 @@ const chatSchema = mongoose.Schema({
     friends: [String],
     msgs: [{
         text: String,
+        author: String,
         time: {
             type: Date,
             immutable: true,

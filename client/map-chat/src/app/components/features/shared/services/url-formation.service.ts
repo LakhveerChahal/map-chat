@@ -20,6 +20,10 @@ export class UrlFormationService {
     getPeopleBaseUrl(): string {
         return `${this.baseUrl}/${constants.url.peopleUrl}`;
     }
+
+    getChatBaseUrl(): string {
+        return `${this.baseUrl}/${constants.url.chatUrl}`;
+    }
     // Base Urls End
 
     // Auth Urls
@@ -55,4 +59,9 @@ export class UrlFormationService {
         return `${this.getPeopleBaseUrl()}/${constants.url.peopleSearch}`;
     }
     // People Urls End
+
+    // Chat Urls
+    getFriendChatUrl(friendId: string) {
+        return `${this.getChatBaseUrl()}/${friendId}`;
+    }
 }

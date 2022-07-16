@@ -47,8 +47,8 @@ io
         socketMap.delete(socket.userId);
     });
 
+    console.log('SocketMap: ', socketMap);
     io.emit('users', [...socketMap]);
-    // socket.emit('users', [...socketMap]);
 });
 
 module.exports = httpServer;

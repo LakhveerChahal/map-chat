@@ -1,5 +1,4 @@
 const Chat = require("../models/chat");
-const mongoose = require('mongoose');
 
 // payload: {content: string, from: string, to: string}
 const saveMsg = async (payload) => {
@@ -17,6 +16,7 @@ const saveMsg = async (payload) => {
         $push: {
             msgs: {
                 text: payload.content,
+                author: payload.from,
                 time: Date.now()
             }
         }
@@ -25,6 +25,43 @@ const saveMsg = async (payload) => {
     });
 };
 
+// given two users, fetch their chat
+const fetchChat = async (user1, user2, offset) => {
+
+    return await Chat.aggregate([
+        {
+            $match: {
+                friends: {
+                    $elemMatch: { $eq: user1 },
+                    $elemMatch: { $eq: user2 },
+                }
+            }, 
+        }, {
+            $project: {
+                msgs: 1, 
+                _id: 0
+            }
+        }, {
+            $unwind: '$msgs',
+        }, {
+            $sort: {
+                'msgs.time': -1
+            }
+        }, {
+            $skip: offset
+        }, {
+            $limit: 10
+        }, {
+            $project: {
+                text: '$msgs.text',
+                author: '$msgs.author',
+                time: '$msgs.time'
+            }
+        }
+    ]);
+};
+
 module.exports = {
-    saveMsg
+    saveMsg,
+    fetchChat
 };
