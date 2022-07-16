@@ -11,7 +11,7 @@ mongoose.connect('mongodb+srv://lakhveerSingh:' + process.env.MONGO_PASS +'@dbcl
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:4200'],
+    origin: [process.env.BASE_URL],
     credentials: true
 }));
 app.use(bodyParser.urlencoded({ extended: false }));
