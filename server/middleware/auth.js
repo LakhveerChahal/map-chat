@@ -25,6 +25,7 @@ const softAuthorization = (req, res, next) => {
         return next();
     } catch (error) {
         console.error(error);
+        return next();
     }
 };
 

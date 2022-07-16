@@ -2,6 +2,7 @@ const { Server } = require('socket.io');
 const { createServer } = require("http");
 const jwt = require('jsonwebtoken');
 const app = require('./app');
+const chatService = require('./services/chat.service');
 
 const httpServer = createServer(app);
 
@@ -34,7 +35,7 @@ io
     console.log('USERID: ' + socket.userId);
 
     socket.on('pvt msg', ({ content, to }) => {
-
+        chatService.saveMsg({content, from: socket.userId, to});
         socket.to(socketMap.get(to)).emit('pvt msg', {
             content,
             from: socket.userId,
@@ -44,7 +45,7 @@ io
     socket.on('disconnect', (reason) => {
         console.log('DISCONNECTED:' + reason);
         socketMap.delete(socket.userId);
-    })
+    });
 
     io.emit('users', [...socketMap]);
     // socket.emit('users', [...socketMap]);

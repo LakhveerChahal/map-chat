@@ -25,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.dataSharingService.setLoggedInUser(user);
         }
       }, (err) => {
+        this.userPreferenceService.clearSessionToken();
         this.dataSharingService.setLoggedInUser(null);
       });
     }
