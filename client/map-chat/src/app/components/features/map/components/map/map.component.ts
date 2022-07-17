@@ -34,11 +34,12 @@ export class MapComponent implements OnInit, OnDestroy {
 
     this.subscription.add(this.dataSharingService.getLoggedInUser().subscribe((user: User | null) => {
       this.user = user;
-      if(!user) {
+      if(!this.user || !this.map) {
         this.removeAllMarkers();
         return;
       }
 
+      this.map.zoomToUser(this.user);
       this.showMarkers();
     }));
   }
@@ -51,6 +52,7 @@ export class MapComponent implements OnInit, OnDestroy {
     .subscribe((markers: Marker[]) => {
       if(this.user == null) { return; }
       
+      markers.push(new Marker(this.user._id, this.user.name, this.user.lat, this.user.lng, this.user.isOnline));
       this.map?.addUserMarkers(markers, this.user);
     });
   }

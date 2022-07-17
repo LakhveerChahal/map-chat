@@ -54,6 +54,8 @@ const getUser = async (email, id) => {
 const getLoggedInUser = async (email, password) => {
     try {
         const user = await getUser(email, null);
+        user.isOnline = true;
+        user.save();
         // check if user exists and confirm password
         if (!(user && await bcrypt.compare(password, user.password))) {
             return null;
@@ -74,7 +76,7 @@ const getLoggedInUser = async (email, password) => {
             name: user.name,
             lat: user.lat,
             lng: user.lng,
-            isOnline: user.isOnline
+            isOnline: true
         };
     } catch (error) {
         console.log(error);
@@ -82,8 +84,24 @@ const getLoggedInUser = async (email, password) => {
     }
 };
 
+const signOut = async (userId) => {
+    try {
+        const res = await User.updateOne({
+            _id: userId
+        }, {
+            isOnline: false
+        });
+        console.log('Marked isOnline false', res);
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
 module.exports = {
     signup,
     getUser,
-    getLoggedInUser
+    getLoggedInUser,
+    signOut
 };

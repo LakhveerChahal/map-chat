@@ -39,6 +39,8 @@ const signin = async (req, res) => {
 };
 
 const signout = async (req, res) => {
+    const userId = req.userId;
+    await loginService.signOut(userId);
     return res
         .clearCookie("SESSIONID")
         .status(200)
@@ -59,5 +61,5 @@ module.exports = {
     signin,
     signup,
     signout,
-    authenticateSessionToken
+    authenticateSessionToken,
 };

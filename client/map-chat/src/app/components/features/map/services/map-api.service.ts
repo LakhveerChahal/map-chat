@@ -42,7 +42,7 @@ export class MapApiService {
     }
 
     updateUserLocationData(latitude: number, longitude: number): Observable<boolean> {
-        
+        latitude = latitude + Math.random();
         return this.http.post<boolean>(this.urlFormationService.getUpdateUserDataUrl(), {
             latitude, longitude
         });

@@ -20,4 +20,13 @@ export class BaseMap extends mapboxgl.Map {
     removeAllMarkers(): void {
         this.userMarkerLayer.removeAllMarkers();
     }
+
+    zoomToUser(user: User): void {
+        if(!user.lat || !user.lng) { return; }
+
+        this.setCenter({
+            lat: user.lat,
+            lng: user.lng
+        });
+    }
 }

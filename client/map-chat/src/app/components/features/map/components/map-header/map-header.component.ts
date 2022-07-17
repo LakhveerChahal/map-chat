@@ -86,7 +86,10 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
 
   toggleSignIn(): void {
     if (!this.showSignIn) {
-      this.userPreferenceService.clearSessionToken();
+      // Signing Out...
+      this.commonApiService.signOut().subscribe(() => {
+        this.userPreferenceService.clearSessionToken();
+      });
       this.disconnectSocket();
       this.dataSharingService.setLoggedInUser(null);
       this.showSignIn = true;
@@ -113,6 +116,9 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.commonApiService.signOut().subscribe(() => {
+      this.userPreferenceService.clearSessionToken();
+    });
     this.disconnectSocket();
   }
 }

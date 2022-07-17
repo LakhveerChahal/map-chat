@@ -14,6 +14,7 @@ import { User } from '@features/shared/models/user.model';
 export class MapLayerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() loggedInUser: User | null = null;
   socket: Socket | null = null;
+  watchId: number = 0;
   subscription = new Subscription();
 
   constructor(
@@ -37,19 +38,18 @@ export class MapLayerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateUserLocationData(): void {
-    if(!this.loggedInUser) { return; }
-
     if(!navigator.geolocation) { return; }
 
-    navigator.geolocation.watchPosition(this.updateLocationCallback.bind(this), this.errorGettingLocationCallback.bind(this), {
+    navigator.geolocation.clearWatch(this.watchId);
+    if(!this.loggedInUser) { return; }
+
+    this.watchId = navigator.geolocation.watchPosition(this.updateLocationCallback.bind(this), this.errorGettingLocationCallback.bind(this), {
       timeout: 30 * 1000,
       enableHighAccuracy: true
     });
   }
 
   updateLocationCallback(location: UserGeolocationPosition): void {
-    console.log(this);
-    
     this.mapApiService.updateUserLocationData(location.coords.latitude, location.coords.longitude).subscribe((res: boolean) => {});
   }
 

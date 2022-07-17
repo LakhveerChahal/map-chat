@@ -10,9 +10,10 @@ import { User } from '@features/shared/models/user.model';
 })
 export class UserMarkerLayer {
     markers: mapboxgl.Marker[] = [];
+    static viewContainerRef: ViewContainerRef;
 
-    constructor(private viewContainerRef: ViewContainerRef) {
-
+    constructor(viewContainerRef: ViewContainerRef) {
+        UserMarkerLayer.viewContainerRef = viewContainerRef;
     }
 
     public removeAllMarkers(): void {
@@ -24,24 +25,29 @@ export class UserMarkerLayer {
         for (let index = 0; index < markers.length; index++) {
             const marker = markers[index];
             const divEl = UserMarkerLayer.getMarkerElement(marker);
-            this.markers.push(this.getMarkerInstance(divEl, marker, user).addTo(map));
+            this.markers.push(UserMarkerLayer.getMarkerInstance(divEl, marker, user).addTo(map));
         }
     }
 
-    public getMarkerInstance(divEl: HTMLDivElement, marker: Marker, user: User): mapboxgl.Marker {
+    public static getMarkerInstance(divEl: HTMLDivElement, marker: Marker, user: User): mapboxgl.Marker {
         const markerInstance = new mapboxgl.Marker(divEl)
-            .setPopup(this.getPopUpInstance(marker, user))
             .setLngLat({
                 lat: marker.lat,
                 lng: marker.lng,
             });
-        
 
+        if(!UserMarkerLayer.isUserOwnMarker(marker, user)) { 
+            markerInstance.setPopup(UserMarkerLayer.getPopUpInstance(marker, user)); 
+        } else {
+            markerInstance.getElement().addEventListener('click', (ev: MouseEvent) => {
+                
+            });
+        }
         return markerInstance;
     }
 
-    public getPopUpInstance(marker: Marker, user: User): mapboxgl.Popup {
-        const popupComp = this.viewContainerRef.createComponent(MarkerPopupComponent);
+    public static getPopUpInstance(marker: Marker, user: User): mapboxgl.Popup {
+        const popupComp = UserMarkerLayer.viewContainerRef.createComponent(MarkerPopupComponent);
         popupComp.instance.marker = marker;
         popupComp.instance.user = user;
         const popUp = new mapboxgl.Popup()
@@ -62,6 +68,10 @@ export class UserMarkerLayer {
             .setDOMContent(popupComp.location.nativeElement)
         
         return popUp;
+    }
+
+    public static isUserOwnMarker(marker: Marker, user: User): boolean {
+        return marker.id === user._id;
     }
 
     public static getMarkerElement(marker: Marker): HTMLDivElement {
