@@ -1,5 +1,14 @@
-<div class="profile-view-wrapper">
+<div class="profile-view-wrapper" *ngIf="user">
     <section class="image-section">
-        <img [src]="user?.img" alt="profile picture">
+        <img [src]="user.img" alt="profile picture">
+    </section>
+
+    <section class="general-info-section">
+        <p>{{ user.name }}</p>
+    </section>
+
+    <section class="friends-info-section">
+        <h4>Friends</h4>
+        
     </section>
 </div>

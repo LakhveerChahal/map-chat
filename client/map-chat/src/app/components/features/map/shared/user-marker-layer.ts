@@ -4,6 +4,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { MarkerPopupComponent } from '../components/marker-popup/marker-popup.component';
 import { User } from '@features/shared/models/user.model';
+import { SupabaseApiService } from '@features/shared/services/supabase-api.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +12,14 @@ import { User } from '@features/shared/models/user.model';
 export class UserMarkerLayer {
     markers: mapboxgl.Marker[] = [];
     static viewContainerRef: ViewContainerRef;
+    static supabaseService: SupabaseApiService
 
-    constructor(viewContainerRef: ViewContainerRef) {
+    constructor(
+        viewContainerRef: ViewContainerRef,
+        supabaseService: SupabaseApiService
+    ) {
         UserMarkerLayer.viewContainerRef = viewContainerRef;
+        UserMarkerLayer.supabaseService = supabaseService;
     }
 
     public removeAllMarkers(): void {
@@ -79,7 +85,8 @@ export class UserMarkerLayer {
         const width = marker.width;
         const height = marker.height;
         el.className = 'user-marker';
-        el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
+        const url = UserMarkerLayer.supabaseService.getPublicImageUrl(marker.id);
+        el.style.backgroundImage = `url(${url})`;
         el.style.width = `${width}px`;
         el.style.height = `${height}px`;
         el.style.backgroundSize = '100%';

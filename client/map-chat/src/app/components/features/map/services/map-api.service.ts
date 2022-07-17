@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UrlFormationService } from '@features/shared/services/url-formation.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '@features/shared/models/user.model';
+import { User, UserMetaData } from '@features/shared/models/user.model';
 import { UserPreferenceService } from './user-preference.service';
 import { constants } from '../shared/constants';
 
@@ -46,5 +46,9 @@ export class MapApiService {
         return this.http.post<boolean>(this.urlFormationService.getUpdateUserDataUrl(), {
             latitude, longitude
         });
+    }
+
+    getUserMetaDataById(): Observable<UserMetaData> {
+        return this.http.get<UserMetaData>(this.urlFormationService.getUserMetaDataByIdUrl());
     }
 }

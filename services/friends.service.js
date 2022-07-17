@@ -39,10 +39,10 @@ const acceptFriendRequest = async (friendId, userId) => {
         friendUser.friends.push(userId);
 
         // remove Id from receivedReq array
-        const friendIndex = user.receivedReq.findIndex((id) => id === friendId);
+        const friendIndex = user.receivedReq.findIndex((id) => id.equals(friendId));
         if(friendIndex !== -1) { user.receivedReq.splice(friendIndex, 1); }
         // remove Id from sentReq array
-        const userIndex = friendUser.sentReq.findIndex((id) => id === userId);
+        const userIndex = friendUser.sentReq.findIndex((id) => id.equals(userId));
         if(userIndex !== -1) { friendUser.sentReq.splice(userIndex, 1); }
 
         user.save();

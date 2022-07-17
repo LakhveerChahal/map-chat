@@ -23,6 +23,7 @@ export const constants = {
         peopleSearch: 'search',
         request: 'request',
         acceptRequest: 'accept-request',
+        metadata: 'metadata',
     },
     searchText: 'searchText',
     limit: 'limit',

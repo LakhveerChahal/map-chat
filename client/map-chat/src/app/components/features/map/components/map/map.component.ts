@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { constants } from '../../shared/constants';
 import { Marker } from '../../models/marker.model';
 import { User } from '@features/shared/models/user.model';
+import { SupabaseApiService } from '@features/shared/services/supabase-api.service';
 
 @Component({
   selector: 'app-map',
@@ -22,15 +23,15 @@ export class MapComponent implements OnInit, OnDestroy {
   constructor(
     public mapApiService: MapApiService,
     public dataSharingService: DataSharingService,
-    public viewContainerRef: ViewContainerRef
-  ) {
-  }
+    public viewContainerRef: ViewContainerRef,
+    public supabaseService: SupabaseApiService
+  ) { }
 
   ngOnInit(): void {
     this.map = new BaseMap({
       ...constants.defaultMapConfig,
       container: 'map', 
-    }, this.viewContainerRef);
+    }, this.viewContainerRef, this.supabaseService);
 
     this.subscription.add(this.dataSharingService.getLoggedInUser().subscribe((user: User | null) => {
       this.user = user;

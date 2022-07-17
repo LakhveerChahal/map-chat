@@ -12,3 +12,13 @@ export class User {
         public friendReqSent: boolean
     ) { }
 }
+
+export interface UserMetaData {
+    _id: string;
+    friendCount: number;
+    friends: User;
+    requestSentCount: number;
+    requestSent: User;
+    requestReceivedCount: number;
+    requestReceived: number;
+}

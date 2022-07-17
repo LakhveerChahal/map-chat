@@ -74,4 +74,9 @@ export class UrlFormationService {
     getUpdateUserDataUrl(): string {
         return `${this.getUserBaseUrl()}`;
     }
+
+    getUserMetaDataByIdUrl(): string {
+        return `${this.getUserBaseUrl()}/${constants.url.metadata}`;
+    }
+    // User Urls End
 }
