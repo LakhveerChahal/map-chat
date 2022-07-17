@@ -56,6 +56,7 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
     this.socket.on('connect', () => {
       if(!this.socket) { return; }
 
+      this.removeCustomListeners(this.socket);
       this.dataSharingService.shareSocket(this.socket);
     });
 
@@ -68,7 +69,6 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
 
     this.socket.on('users', (socketMapArray: any[]) => {
       const socketMap = new Map<string, string>(socketMapArray);
-      console.log(socketMap);
       
       this.dataSharingService.setSocketMap(socketMap);
     })
@@ -77,8 +77,10 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
   disconnectSocket(): void {
     if(!this.socket) { return; }
 
+    this.removeCustomListeners(this.socket);
     this.socket.disconnect();
     this.socket = null;
+    
     this.dataSharingService.shareSocket(this.socket);
   }
 
@@ -104,6 +106,10 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
     this.establishSocket();
     this.showSignInDialog = false;
     this.showSignIn = false;
+  }
+
+  removeCustomListeners(socket: Socket): void {
+    socket.removeListener('pvt msg');
   }
 
   ngOnDestroy(): void {

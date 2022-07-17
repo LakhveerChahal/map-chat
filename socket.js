@@ -36,6 +36,9 @@ io
 
     socket.on('pvt msg', ({ content, to }) => {
         chatService.saveMsg({content, from: socket.userId, to});
+        console.log('FROM: ' + socket.userId);
+        console.log('Sending: ' + content);
+        console.log('TO: ' + to);
         socket.to(socketMap.get(to)).emit('pvt msg', {
             content,
             from: socket.userId,

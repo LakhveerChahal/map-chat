@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Marker } from '@features/map/models/marker.model';
 import { Message } from '@features/map/models/message.model';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import { ChatApiService } from '@features/map/services/chat-api.service';
 export class MarkerPopupComponent implements OnInit, OnDestroy {
   @Input() marker: Marker | undefined;
   @Input() user: User | undefined;
+  @ViewChild('msgList') msgListRef: ElementRef<HTMLDivElement> | null = null;
   messages: Message[] = [];
   subscription = new Subscription();
   socket: Socket | null = null;
@@ -31,6 +32,7 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.dataSharingService.getSocket().subscribe((socket: Socket | null) => {
         this.socket = socket;
+        this.registerSocketListeners();
       })
     );
 
@@ -39,7 +41,6 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
         this.socketMap = socketMap;
       })
     );
-    this.registerSocketListeners();
 
     this.fetchChat();
   }
@@ -55,22 +56,23 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit(newMsgRef: HTMLInputElement, msgList: HTMLDivElement): void {
-    this.sendMessage(newMsgRef, msgList);
+  onSubmit(newMsgRef: HTMLInputElement): void {
+    this.sendMessage(newMsgRef);
     newMsgRef.value = '';
   }
 
   registerSocketListeners(): void {
     if(!this.socket) { return; }
-
+    
     this.socket.on('pvt msg', ({ content, from }) => {
       if(this.marker && this.marker.id == from) {
         this.messages.push(new Message(content, from));
+        this.scrollToBottom();
       }
     });
   }
 
-  sendMessage(newMsgRef: HTMLInputElement, msgList: HTMLDivElement): void {
+  sendMessage(newMsgRef: HTMLInputElement): void {
     const newMsgText: string | undefined = newMsgRef.value;
 
     if(this.user == null || newMsgText == undefined || this.marker == undefined) { return; }
@@ -80,15 +82,18 @@ export class MarkerPopupComponent implements OnInit, OnDestroy {
       content: newMsgText,
       to: this.marker.id
     });
-    this.scrollToBottom(msgList);
+    this.scrollToBottom();
   }
 
   onScroll(): void {
     this.fetchChat();
   }
 
-  scrollToBottom(element: HTMLDivElement): void {
+  scrollToBottom(): void {
     setTimeout(() => {
+      if(!this.msgListRef) { return; }
+
+      const element = this.msgListRef.nativeElement;
       const scrollHeight = element.scrollHeight;
       element.scrollTo({
         top: scrollHeight
