@@ -19,8 +19,8 @@ export class CommonApiService {
         });
     }
 
-    signIn(email: string, pwd: string): Observable<{ token: string, _id: string }> {
-        return this.http.post<{ token: string, _id: string }>(this.urlFormationService.getSigninUrl(), { email, pwd }, {
+    signIn(email: string, pwd: string): Observable<{ token: string, _id: string, name: string, isOnline: boolean, lat: number, lng: number }> {
+        return this.http.post<{ token: string, _id: string, name: string, isOnline: boolean, lat: number, lng: number }>(this.urlFormationService.getSigninUrl(), { email, pwd }, {
             withCredentials: true,
         });
     }

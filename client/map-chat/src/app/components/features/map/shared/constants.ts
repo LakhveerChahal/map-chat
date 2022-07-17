@@ -4,13 +4,14 @@ export const constants = {
     defaultMapConfig: {
         style: 'mapbox://styles/mapbox/streets-v11',
         center: {
-            lng: -74.5,
-            lat: 40
+            lng: 73.9426952,
+            lat: 18.5501796
         },
         zoom: 9,
         accessToken: environment.mapboxAccessToken,
     },
     url: {
+        authUrl: 'auth',
         userUrl: 'user',
         signupUrl: 'signup',
         signinUrl: 'signin',

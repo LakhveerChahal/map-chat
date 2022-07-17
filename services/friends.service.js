@@ -2,6 +2,7 @@ const User = require("../models/user");
 
 const getFriends = async (userId) => {
     try {
+        // can be improved
         return await User.where('friends').in(userId).select('_id name lat lng isOnline email').exec();
     } catch (error) {
         console.error(error);

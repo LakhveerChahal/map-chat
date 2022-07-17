@@ -70,7 +70,11 @@ const getLoggedInUser = async (email, password) => {
 
         return {
             token,
-            _id: user._id
+            _id: user._id,
+            name: user.name,
+            lat: user.lat,
+            lng: user.lng,
+            isOnline: user.isOnline
         };
     } catch (error) {
         console.log(error);

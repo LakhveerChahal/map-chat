@@ -18,7 +18,7 @@ export class MapComponent implements OnInit, OnDestroy {
   map: BaseMap | undefined;
   subscription = new Subscription();
   user: User | null = null;
-  
+
   constructor(
     public mapApiService: MapApiService,
     public dataSharingService: DataSharingService,
@@ -29,7 +29,7 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.map = new BaseMap({
       ...constants.defaultMapConfig,
-      container: 'map'
+      container: 'map', 
     }, this.viewContainerRef);
 
     this.subscription.add(this.dataSharingService.getLoggedInUser().subscribe((user: User | null) => {

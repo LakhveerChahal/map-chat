@@ -40,4 +40,11 @@ export class MapApiService {
             params,
         });
     }
+
+    updateUserLocationData(latitude: number, longitude: number): Observable<boolean> {
+        
+        return this.http.post<boolean>(this.urlFormationService.getUpdateUserDataUrl(), {
+            latitude, longitude
+        });
+    }
 }
