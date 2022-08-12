@@ -28,6 +28,7 @@ const getUserMetaDataById = async (userId) => {
     userMetaData.requestSentCount = user.sentReq.length;
     userMetaData.requestReceivedCount = user.receivedReq.length;
 
+    // need to work on this
     const res = await User
         .aggregate([
             { $match: { _id: mongoose.Types.ObjectId(userId) } },

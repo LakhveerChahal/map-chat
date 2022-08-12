@@ -43,11 +43,9 @@ export class UserMarkerLayer {
             });
 
         if(!UserMarkerLayer.isUserOwnMarker(marker, user)) { 
-            markerInstance.setPopup(UserMarkerLayer.getPopUpInstance(marker, user)); 
+            markerInstance.setPopup(UserMarkerLayer.getPopUpInstance(marker, user));
         } else {
-            markerInstance.getElement().addEventListener('click', (ev: MouseEvent) => {
-                
-            });
+            
         }
         return markerInstance;
     }
@@ -61,7 +59,7 @@ export class UserMarkerLayer {
                 lat: marker.lat,
                 lng: marker.lng
             })
-            .on('open', (event: any) => { 
+            .on('open', (event: any) => {
                 const parentEl: HTMLDivElement = event.target._container.parentElement;
                 
                 const msgListEl: HTMLDivElement | null = parentEl.querySelector('.pop-up-wrapper>.msg-list');
