@@ -1,6 +1,6 @@
 <div class="profile-view-wrapper" *ngIf="user">
     <section class="image-section">
-        <img [src]="user.img" alt="profile picture">
+        <img class="image-xl" [src]="supabase.getPublicImageUrl(user._id)" alt="profile picture">
     </section>
 
     <section class="general-info-section">
@@ -9,6 +9,13 @@
 
     <section class="friends-info-section">
         <h4>Friends</h4>
-        
+        <div class="layout-flex" *ngFor="let friend of friends">
+            <div>
+                <img class="image-xs" [src]="supabase.getPublicImageUrl(friend._id)" [alt]="friend.name">
+            </div>
+            <div>
+                {{ friend.name }}
+            </div>
+        </div>
     </section>
 </div>

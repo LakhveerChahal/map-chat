@@ -17,6 +17,7 @@ export class MapApiService {
         public userPreferenceService: UserPreferenceService
     ) { }
 
+    // TODO: this should be bounding box constrained
     getFriends(): Observable<User[]> {
         const authToken = this.userPreferenceService.getSessionToken();
         return this.http.get<User[]>(this.urlFormationService.getFriendsBaseUrl(), {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { User } from '../../shared/models/user.model';
 import { Socket } from 'socket.io-client';
 
@@ -11,6 +11,7 @@ export class DataSharingService {
     private searchString = new ReplaySubject<string>(1);
     private socket = new ReplaySubject<Socket | null>(1);
     private socketMap = new ReplaySubject<Map<string, string>>(1);
+    private reloadFriendList = new Subject<void>();
 
     public getLoggedInUser(): BehaviorSubject<User | null> {
         return this.loggedInUser;
@@ -42,5 +43,13 @@ export class DataSharingService {
 
     public getSocketMap(): ReplaySubject<Map<string, string>> {
         return this.socketMap;
+    }
+
+    public setReloadFriendList(): void {
+        this.reloadFriendList.next();
+    }
+
+    public getReloadFriendListEvent(): Subject<void> {
+        return this.reloadFriendList;
     }
 }

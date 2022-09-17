@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { UrlFormationService } from '@features/shared/services/url-formation.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from '@features/shared/models/user.model';
+import { UserPreferenceService } from './user-preference.service';
 
 
 @Injectable({
@@ -10,7 +12,8 @@ import { Observable } from 'rxjs';
 export class FriendsApiService {
     constructor(
         public http: HttpClient,
-        public urlFormationService: UrlFormationService
+        public urlFormationService: UrlFormationService,
+        public userPreferenceService: UserPreferenceService
     ) {
     }
 
@@ -20,5 +23,14 @@ export class FriendsApiService {
 
     acceptFriendRequest(friendId: string): Observable<void> {
         return this.http.put<void>(this.urlFormationService.getPutAcceptFriendRequestUrl(friendId), {});
+    }
+
+    getFriends(): Observable<User[]> {
+        const authToken = this.userPreferenceService.getSessionToken();
+        return this.http.get<User[]>(this.urlFormationService.getFriendsBaseUrl(), {
+            headers: {
+                token: authToken
+            }
+        });
     }
 }

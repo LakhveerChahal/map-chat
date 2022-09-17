@@ -6,7 +6,8 @@ const cookieParser = require('cookie-parser');
 const routes = require('./routes/index.route');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://lakhveerSingh:' + process.env.MONGO_PASS +'@dbcluster.ttjw2.mongodb.net/map-chat?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://lakhveerSingh:'+ process.env.MONGO_PASS +'@dbcluster.ttjw2.mongodb.net/?retryWrites=true&w=majority');
+
 
 const app = express();
 

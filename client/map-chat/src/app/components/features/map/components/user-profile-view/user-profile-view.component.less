@@ -6,15 +6,26 @@
     .image-section {
         display: flex;
         justify-content: center;
-        img {
-            border-radius: 50%;
-            height: 7em;
-            width: 7em;
-        }
+    }
+    img {
+        border-radius: 50%;
+    }
+    .image-xs {
+        height: 3em;
+        width: 3em;
+    }
+    .image-xl {
+        height: 7em;
+        width: 7em;
     }
 
     .friends-info-section {
         height: 70%;
         overflow-y: auto;
+        .layout-flex {
+            display: flex;
+            gap: 1em;
+            align-items: center;
+        }
     }
 }
