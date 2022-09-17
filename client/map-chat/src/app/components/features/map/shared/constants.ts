@@ -29,4 +29,7 @@ export const constants = {
     limit: 'limit',
     offset: 'offset',
     defaultLimit: 10,
+    active: 'active',
+    received: 'received',
+    sent: 'sent'
 };

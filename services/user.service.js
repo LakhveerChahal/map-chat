@@ -28,23 +28,7 @@ const getUserMetaDataById = async (userId) => {
     userMetaData.requestSentCount = user.sentReq.length;
     userMetaData.requestReceivedCount = user.receivedReq.length;
 
-    // need to work on this
-    const res = await User
-        .aggregate([
-            { $match: { _id: mongoose.Types.ObjectId(userId) } },
-            {
-                $lookup: {
-                    from: "User",
-                    localField: "friends",
-                    foreignField: "id",
-                    as: "friends_arr"
-                }
-            }
-        ]);
-
-    console.log(res);
-
-    return user;
+    return userMetaData;
 };
 
 const getUsersInfoByIds = async (ids) => {

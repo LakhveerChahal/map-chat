@@ -41,7 +41,7 @@ export class SearchPeopleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.peopleSearchInput.nativeElement.onkeyup = () => {
       const searchValue = this.peopleSearchInput?.nativeElement.value;
-      this.searchEmitter.next(searchValue);
+      searchValue && this.searchEmitter.next(searchValue);
     };
 
     this.subscription.add(

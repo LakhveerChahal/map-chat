@@ -5,6 +5,7 @@ import { User, UserMetaData } from '@features/shared/models/user.model';
 import { MapApiService } from '@features/map/services/map-api.service';
 import { FriendsApiService } from '@features/map/services/friends-api.service';
 import { DataSharingService } from '@features/map/services/data-sharing.service';
+import { constants } from '@features/map/shared/constants';
 
 @Component({
   selector: 'app-user-profile-view',
@@ -14,6 +15,11 @@ import { DataSharingService } from '@features/map/services/data-sharing.service'
 export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input() user: User | null = null;
   friends: User[] = [];
+  friendRequests: User[] = [];
+  sentFriendRequests: User[] = [];
+  userMetadata: UserMetaData | null = null;
+  constants = constants;
+  tabState: string = constants.active;
   subscription = new Subscription();
 
   constructor(
@@ -26,29 +32,51 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.dataSharingService.getReloadFriendListEvent().subscribe(() => {
-      this.getFriendsList();
+    this.subscription.add(this.dataSharingService.getReloadFriendListEvent().subscribe((state: string) => {
+      switch (state) {
+        case constants.active:
+          this.getFriendsList(state);
+          break;
+        case constants.sent:
+          this.getFriendsList(state);
+        break;
+        default:
+          break;
+      }
     }));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.user) {
       this.getUserMetaDataById();
-      this.getFriendsList();
+      this.getFriendsList(constants.active);
+      this.getFriendsList(constants.received);
+      this.getFriendsList(constants.sent);
     }
   }
 
   getUserMetaDataById(): void {
     this.mapApiService.getUserMetaDataById().subscribe((res: UserMetaData) => {
-      console.log(res);
-      
+      this.userMetadata = res;
     });
   }
 
-  getFriendsList(): void {
+  getFriendsList(state: string): void {
     // can be paginated in future
-    this.friendsApiService.getFriends().subscribe((friends: User[]) => {
-      this.friends = friends;
+    this.friendsApiService.getFriends(state).subscribe((friends: User[]) => {
+      switch (state) {
+        case constants.active:
+          this.friends = friends;
+          break;
+        case constants.received:
+          this.friendRequests = friends;
+          break;
+        case constants.sent:
+          this.sentFriendRequests = friends
+          break;
+        default:
+          break;
+      }
     });
   }
 

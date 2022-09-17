@@ -7,15 +7,47 @@
         <p>{{ user.name }}</p>
     </section>
 
+    <!-- Active friends -->
     <section class="friends-info-section">
-        <h4>Friends</h4>
-        <div class="layout-flex" *ngFor="let friend of friends">
-            <div>
-                <img class="image-xs" [src]="supabase.getPublicImageUrl(friend._id)" [alt]="friend.name">
-            </div>
-            <div>
-                {{ friend.name }}
-            </div>
+        <div class="layout-flex padding-1">
+            <div class="tab" [ngClass]="{'active': tabState == constants.active}" (click)="tabState = constants.active"><span>Friends ({{ userMetadata?.friendCount || 0 }})</span></div>
+            <div class="tab" [ngClass]="{'active': tabState == constants.received}" (click)="tabState = constants.received"><span>Requests ({{ userMetadata?.requestReceivedCount || 0 }})</span></div>
+            <div class="tab" [ngClass]="{'active': tabState == constants.sent}" (click)="tabState = constants.sent"><span>Sent ({{ userMetadata?.requestSentCount || 0 }})</span></div>
         </div>
+
+        <ng-container *ngIf="tabState == constants.active">
+            <div class="layout-flex" *ngFor="let friend of friends">
+                <div>
+                    <img class="image-xs" [src]="supabase.getPublicImageUrl(friend._id)" [alt]="friend.name">
+                </div>
+                <div>
+                    {{ friend.name }}
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="tabState == constants.received">
+            <div class="layout-flex" *ngFor="let friend of friendRequests">
+                <div>
+                    <img class="image-xs" [src]="supabase.getPublicImageUrl(friend._id)" [alt]="friend.name">
+                </div>
+                <div>
+                    {{ friend.name }}
+                </div>
+            </div>
+        </ng-container>
+        
+        <ng-container *ngIf="tabState == constants.sent">
+            <div class="layout-flex" *ngFor="let friend of sentFriendRequests">
+                <div>
+                    <img class="image-xs" [src]="supabase.getPublicImageUrl(friend._id)" [alt]="friend.name">
+                </div>
+                <div>
+                    {{ friend.name }}
+                </div>
+            </div>
+        </ng-container>
+        
     </section>
+
 </div>

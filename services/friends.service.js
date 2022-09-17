@@ -1,9 +1,17 @@
 const User = require("../models/user");
 
-const getFriends = async (userId) => {
+const getFriends = async (userId, state) => {
     try {
-        // can be improved
-        return await User.where('friends').in(userId).select('_id name lat lng isOnline email').exec();
+        let whichFriends = 'friends';
+        switch (state) {
+            case 'received':
+                whichFriends = 'receivedReq';
+                break;
+            case 'sent':
+                whichFriends = 'sentReq';
+                break;
+        }
+        return await User.where(whichFriends).in(userId).select('_id name lat lng isOnline email').exec();
     } catch (error) {
         console.error(error);
     }

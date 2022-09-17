@@ -17,7 +17,7 @@ const getUserMetaDataById = async (req, res) => {
 
     const result = await userService.getUserMetaDataById(userId);
     return res.send(result);
-}
+};
 
 module.exports = {
     updateUserLocationData,

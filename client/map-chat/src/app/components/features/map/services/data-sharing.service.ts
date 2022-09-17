@@ -11,7 +11,7 @@ export class DataSharingService {
     private searchString = new ReplaySubject<string>(1);
     private socket = new ReplaySubject<Socket | null>(1);
     private socketMap = new ReplaySubject<Map<string, string>>(1);
-    private reloadFriendList = new Subject<void>();
+    private reloadFriendList = new Subject<string>();
 
     public getLoggedInUser(): BehaviorSubject<User | null> {
         return this.loggedInUser;
@@ -45,11 +45,11 @@ export class DataSharingService {
         return this.socketMap;
     }
 
-    public setReloadFriendList(): void {
-        this.reloadFriendList.next();
+    public setReloadFriendList(state: string): void {
+        this.reloadFriendList.next(state);
     }
 
-    public getReloadFriendListEvent(): Subject<void> {
+    public getReloadFriendListEvent(): Subject<string> {
         return this.reloadFriendList;
     }
 }

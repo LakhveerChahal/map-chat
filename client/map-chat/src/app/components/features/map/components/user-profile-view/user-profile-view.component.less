@@ -22,6 +22,22 @@
     .friends-info-section {
         height: 70%;
         overflow-y: auto;
+        .tab {
+            padding: 0.5em;
+            background: lightgray;
+            border-radius: 0.5em;
+            cursor: pointer;
+            transition-duration: 0.3s;
+        }
+        .active {
+            background: dimgray;
+        }
+        .tab:hover {
+            scale: 1.05;
+        }
+        .tab:active {
+            scale: 0.98;
+        }
         .layout-flex {
             display: flex;
             gap: 1em;

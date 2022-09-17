@@ -25,9 +25,9 @@ export class FriendsApiService {
         return this.http.put<void>(this.urlFormationService.getPutAcceptFriendRequestUrl(friendId), {});
     }
 
-    getFriends(): Observable<User[]> {
+    getFriends(state: string): Observable<User[]> {
         const authToken = this.userPreferenceService.getSessionToken();
-        return this.http.get<User[]>(this.urlFormationService.getFriendsBaseUrl(), {
+        return this.http.get<User[]>(this.urlFormationService.getFriendsBaseUrl() + `/${state}`, {
             headers: {
                 token: authToken
             }

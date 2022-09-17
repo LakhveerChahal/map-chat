@@ -64,6 +64,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   addFriend(person: User): void {
     this.friendsApiService.sendFriendRequest(person._id).subscribe(() => {
       person.friendReqSent = true;
+      this.dataSharingService.setReloadFriendList(constants.sent);
     });
   }
 
@@ -71,7 +72,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     this.friendsApiService.acceptFriendRequest(person._id).subscribe(() => {
       person.isFriend = true;
       person.friendReqReceived = false;
-      this.dataSharingService.setReloadFriendList();
+      this.dataSharingService.setReloadFriendList(constants.active);
     });
   }
 

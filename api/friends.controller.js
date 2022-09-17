@@ -6,8 +6,9 @@ getUserIdFromReq = (req) => {
 
 const getFriends = async (req, res) => {
     const userId = getUserIdFromReq(req);
+    const state = req.params.state;
     
-    const friends = await friendsService.getFriends(userId);
+    const friends = await friendsService.getFriends(userId, state);
     res.send(friends);
 };
 
