@@ -80,7 +80,7 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  goToFriendLocation(friend: User): void {
+  goToUserLocation(friend: User): void {
     this.dataSharingService.setMapCenter(friend);
   }
 

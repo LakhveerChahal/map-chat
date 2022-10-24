@@ -1,6 +1,9 @@
 <div class="profile-view-wrapper" *ngIf="user">
     <section class="image-section">
-        <img class="image-xl" [src]="supabase.getPublicImageUrl(user._id)" alt="profile picture">
+        <img class="image-xl" 
+            [src]="supabase.getPublicImageUrl(user._id)" 
+            [alt]="user.name"
+            (click)="goToUserLocation(user)">
     </section>
 
     <section class="general-info-section">
@@ -27,7 +30,7 @@
                     {{ friend.name }}
                 </div>
                 <div class="right-align">
-                    <span class="tab" (click)="goToFriendLocation(friend)">Find</span>
+                    <span class="tab" (click)="goToUserLocation(friend)">Find</span>
                 </div>
             </div>
         </ng-container>
