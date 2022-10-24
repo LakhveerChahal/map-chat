@@ -12,6 +12,7 @@ export class DataSharingService {
     private socket = new ReplaySubject<Socket | null>(1);
     private socketMap = new ReplaySubject<Map<string, string>>(1);
     private reloadFriendList = new Subject<string>();
+    private mapCenter = new Subject<User>();
 
     public getLoggedInUser(): BehaviorSubject<User | null> {
         return this.loggedInUser;
@@ -51,5 +52,13 @@ export class DataSharingService {
 
     public getReloadFriendListEvent(): Subject<string> {
         return this.reloadFriendList;
+    }
+
+    public setMapCenter(user: User): void {
+        this.mapCenter.next(user);
+    }
+
+    public getMapCenter(): Subject<User> {
+        return this.mapCenter;
     }
 }

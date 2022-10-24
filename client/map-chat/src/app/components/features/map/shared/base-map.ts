@@ -26,10 +26,10 @@ export class BaseMap extends mapboxgl.Map {
         this.userMarkerLayer.removeAllMarkers();
     }
 
-    zoomToUser(user: User): void {
+    panToUser(user: User): void {
         if(!user.lat || !user.lng) { return; }
 
-        this.setCenter({
+        this.panTo({
             lat: user.lat,
             lng: user.lng
         });

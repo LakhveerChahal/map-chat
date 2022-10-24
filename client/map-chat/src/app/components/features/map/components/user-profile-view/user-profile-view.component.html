@@ -18,10 +18,16 @@
         <ng-container *ngIf="tabState == constants.active">
             <div class="layout-flex" *ngFor="let friend of friends">
                 <div>
-                    <img class="image-xs" [src]="supabase.getPublicImageUrl(friend._id)" [alt]="friend.name">
+                    <img class="image-xs" 
+                        [src]="supabase.getPublicImageUrl(friend._id)" 
+                        [alt]="friend.name"
+                        [ngClass]="{'friend-online': friend.isOnline, 'friend-offline': !friend.isOnline}">
                 </div>
                 <div>
                     {{ friend.name }}
+                </div>
+                <div class="right-align">
+                    <span class="tab" (click)="goToFriendLocation(friend)">Find</span>
                 </div>
             </div>
         </ng-container>

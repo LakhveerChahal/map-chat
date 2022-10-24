@@ -40,8 +40,14 @@ export class MapComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.map.zoomToUser(this.user);
+      this.map.panToUser(this.user);
       this.showMarkers();
+    }));
+
+    this.subscription.add(this.dataSharingService.getMapCenter().subscribe((user: User) => {
+      if(!(user.lat && user.lng && this.map)) { return; }
+
+      this.map.panToUser(user);
     }));
   }
 
