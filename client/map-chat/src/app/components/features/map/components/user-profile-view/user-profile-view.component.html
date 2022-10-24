@@ -19,7 +19,7 @@
         </div>
 
         <ng-container *ngIf="tabState == constants.active">
-            <div class="layout-flex" *ngFor="let friend of friends">
+            <div class="layout-flex padding-0-1" *ngFor="let friend of friends">
                 <div>
                     <img class="image-xs" 
                         [src]="supabase.getPublicImageUrl(friend._id)" 

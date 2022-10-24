@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { SupabaseApiService } from '@features/shared/services/supabase-api.service';
 import { User } from '@features/shared/models/user.model';
 
 @Component({
@@ -9,7 +10,9 @@ import { User } from '@features/shared/models/user.model';
 export class UserProfileComponent implements OnInit {
   @Input() loggedInUser: User | null = null;
 
-  constructor() { }
+  constructor(
+    public supabase: SupabaseApiService, // used in template
+  ) { }
 
   ngOnInit(): void {
   }

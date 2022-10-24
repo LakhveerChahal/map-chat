@@ -1,3 +1,6 @@
-<p *ngIf="!!loggedInUser" class="welcome-section">
-    Welcome {{ loggedInUser.name }}
-</p>
+<ng-container *ngIf="!!loggedInUser">
+    <img [src]="supabase.getPublicImageUrl(loggedInUser._id)" [alt]="loggedInUser.name" class="user-image">
+    <span class="welcome-section">
+        Welcome {{ loggedInUser.name }}
+    </span>
+</ng-container>
