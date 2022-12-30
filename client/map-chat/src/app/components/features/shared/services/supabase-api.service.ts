@@ -14,9 +14,17 @@ export class SupabaseApiService {
 
   getPublicImageUrl(userId: string): string {
     
-    const { publicURL, error } = this.supabase.storage.from('map-chat-bucket').getPublicUrl(`public/${userId}.jpg`);
+    const { publicURL, error } = this.supabase.storage.from('map-chat-bucket').getPublicUrl(`public/${userId}`);
     if(error) { console.error(error); }
 
     return publicURL || '';
   }
+
+  uploadAvatarFile(avatarFile: File, userId: string): Promise<{ data: { Key: string; } | null; error: Error | null; }> {
+    return this.supabase.storage.from('map-chat-bucket').upload(`public/${userId}`, avatarFile, {
+      cacheControl: '3600',
+      upsert: true
+    });
+  }
+
 }

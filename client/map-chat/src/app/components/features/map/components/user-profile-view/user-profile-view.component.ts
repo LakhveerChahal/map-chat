@@ -18,6 +18,7 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
   friendRequests: User[] = [];
   sentFriendRequests: User[] = [];
   userMetadata: UserMetaData | null = null;
+  avatarUrl: string = '';
   subscription = new Subscription();
 
   constructor(
@@ -37,6 +38,7 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.user) {
+      this.setAvatarUrl();
       this.reloadFriendCircleData();
     }
   }
@@ -52,6 +54,15 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
     this.mapApiService.getUserMetaDataById().subscribe((res: UserMetaData) => {
       this.userMetadata = res;
     });
+  }
+
+  setAvatarUrl(): void {
+    this.avatarUrl = '';
+    setTimeout(() => {
+      if (!this.user) { return; }
+
+      this.avatarUrl = this.supabase.getPublicImageUrl(this.user._id);
+    }, 1000);
   }
 
   getFriendsList(state: string): void {
@@ -76,6 +87,17 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
   goToUserLocation(user: User): void {
     this.dataSharingService.setMapCenter(user);
   }
+
+  uploadPicture(inputEl: HTMLInputElement): void {
+    if (!this.user || !inputEl.files || inputEl.files.length == 0) { return; }
+
+    this.supabase.uploadAvatarFile(inputEl.files[0], this.user._id).then((data) => {
+      inputEl.files = null;
+      this.setAvatarUrl();
+      this.dataSharingService.setReloadAvatarEvent();
+    });
+  }
+
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

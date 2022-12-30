@@ -1,9 +1,13 @@
 <div class="profile-view-wrapper" *ngIf="user">
     <section class="image-section">
-        <img class="image-xl" 
-            [src]="supabase.getPublicImageUrl(user._id)" 
-            [alt]="user.name"
+        <label class="img-div" for="img">
+            <input type="file" id="img" name="img" accept="image/*" class="file-input" #imgRef (change)="uploadPicture(imgRef)">
+            <img class="image-xl img-hover" [src]="avatarUrl" [alt]="user.name"
             (click)="goToUserLocation(user)">
+            <span class="material-symbols-outlined img-overlay">
+                photo_camera
+            </span>
+        </label>
     </section>
 
     <section class="general-info-section">
@@ -11,14 +15,10 @@
     </section>
 
     <section class="friends-info-section">
-        <app-friends-info
-            [userMetadata]="userMetadata"
-            [friends]="friends"
-            [friendRequests]="friendRequests"
-            [sentFriendRequests]="sentFriendRequests"
-            >
+        <app-friends-info [userMetadata]="userMetadata" [friends]="friends" [friendRequests]="friendRequests"
+            [sentFriendRequests]="sentFriendRequests">
         </app-friends-info>
-        
+
     </section>
 
 </div>

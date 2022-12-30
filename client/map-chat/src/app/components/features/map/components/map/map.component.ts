@@ -30,7 +30,8 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.map = new BaseMap({
       ...constants.defaultMapConfig,
-      container: 'map', 
+      container: 'map',
+      style: 'mapbox://styles/lakhveer-chahal/ckxsmsar2tlwl15nsp4m1dj79'
     }, this.viewContainerRef, this.supabaseService);
 
     this.registerMapListeners();

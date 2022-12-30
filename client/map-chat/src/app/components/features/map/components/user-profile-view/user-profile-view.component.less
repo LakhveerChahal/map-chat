@@ -10,11 +10,30 @@
     }
     img {
         border-radius: 50%;
-        cursor: pointer;
+        transition: 500ms;
     }
     .image-xl {
         height: 7em;
         width: 7em;
+    }
+    .img-div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .img-div:hover > img {
+        opacity: 0.5;
+    }
+    .img-overlay {
+        position: absolute;
+        visibility: hidden;
+    }
+    .img-div:hover > .img-overlay {
+        visibility: visible;
+    }
+    .file-input {
+        display: none;
     }
 
     .friends-info-section {
