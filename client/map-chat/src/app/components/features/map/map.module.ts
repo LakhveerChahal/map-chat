@@ -11,6 +11,7 @@ import { MapLayerComponent } from './components/map-layer/map-layer.component';
 import { MarkerPopupComponent } from './components/marker-popup/marker-popup.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { UserProfileViewComponent } from './components/user-profile-view/user-profile-view.component';
+import { FriendsInfoComponent } from './components/friends-info/friends-info.component';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { UserProfileViewComponent } from './components/user-profile-view/user-pr
         MarkerPopupComponent,
         UserProfileComponent,
         UserProfileViewComponent,
+        FriendsInfoComponent,
     ],
     imports: [
         MapRoutingModule,

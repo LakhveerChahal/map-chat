@@ -18,8 +18,6 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
   friendRequests: User[] = [];
   sentFriendRequests: User[] = [];
   userMetadata: UserMetaData | null = null;
-  constants = constants;
-  tabState: string = constants.active;
   subscription = new Subscription();
 
   constructor(
@@ -80,8 +78,8 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  goToUserLocation(friend: User): void {
-    this.dataSharingService.setMapCenter(friend);
+  goToUserLocation(user: User): void {
+    this.dataSharingService.setMapCenter(user);
   }
 
   ngOnDestroy(): void {
