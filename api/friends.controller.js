@@ -12,6 +12,14 @@ const getFriends = async (req, res) => {
     res.send(friends);
 };
 
+const getActiveFriendsMarkers = async (req, res) => {
+    const userId = getUserIdFromReq(req);
+    const { minLat, maxLat, minLng, maxLng } = req.query;
+    
+    const friends = await friendsService.getFriendsInBoundingBox(userId, minLat, maxLat, minLng, maxLng);
+    res.send(friends);
+};
+
 const putFriendRequest = async (req, res) => {
     const userId = getUserIdFromReq(req);
     const friendId = req.params.friendId;
@@ -47,6 +55,7 @@ const acceptFriendRequest = async (req, res) => {
 
 module.exports = {
     getFriends,
+    getActiveFriendsMarkers,
     putFriendRequest,
     acceptFriendRequest
 };

@@ -17,6 +17,10 @@ export class UrlFormationService {
         return `${this.baseUrl}/${constants.url.friendsUrl}`;
     }
 
+    getActiveFriendsMarkers(): string {
+        return `${this.baseUrl}/${constants.url.friendsUrl}/${constants.url.markers}/${constants.active}`;
+    }
+
     getPeopleBaseUrl(): string {
         return `${this.baseUrl}/${constants.url.peopleUrl}`;
     }

@@ -17,6 +17,30 @@ const getFriends = async (userId, state) => {
     }
 };
 
+const getFriendsInBoundingBox = async (userId, minLat, maxLat, minLng, maxLng) => {
+    try {
+        const user = await User.findById(userId).populate({
+            path: 'friends',
+            match: {
+                lat: {
+                    $gte: minLat,
+                    $lte: maxLat
+                },
+                lng: {
+                    $gte: minLng,
+                    $lte: maxLng
+                }
+            },
+            select: '_id name lat lng isOnline email'
+        }).exec();
+
+        console.log(user.friends);
+        return user.friends || [];
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 const putFriendRequest = async (friendId, userId) => {
     try {
         await User.findByIdAndUpdate(userId, {
@@ -48,10 +72,10 @@ const acceptFriendRequest = async (friendId, userId) => {
 
         // remove Id from receivedReq array
         const friendIndex = user.receivedReq.findIndex((id) => id.equals(friendId));
-        if(friendIndex !== -1) { user.receivedReq.splice(friendIndex, 1); }
+        if (friendIndex !== -1) { user.receivedReq.splice(friendIndex, 1); }
         // remove Id from sentReq array
         const userIndex = friendUser.sentReq.findIndex((id) => id.equals(userId));
-        if(userIndex !== -1) { friendUser.sentReq.splice(userIndex, 1); }
+        if (userIndex !== -1) { friendUser.sentReq.splice(userIndex, 1); }
 
         user.save();
         friendUser.save();
@@ -65,5 +89,6 @@ const acceptFriendRequest = async (friendId, userId) => {
 module.exports = {
     getFriends,
     putFriendRequest,
-    acceptFriendRequest
+    acceptFriendRequest,
+    getFriendsInBoundingBox,
 };

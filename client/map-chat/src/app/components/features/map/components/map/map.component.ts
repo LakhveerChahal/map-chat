@@ -33,6 +33,8 @@ export class MapComponent implements OnInit, OnDestroy {
       container: 'map', 
     }, this.viewContainerRef, this.supabaseService);
 
+    this.registerMapListeners();
+
     this.subscription.add(this.dataSharingService.getLoggedInUser().subscribe((user: User | null) => {
       this.user = user;
       if(!this.user || !this.map) {
@@ -51,8 +53,18 @@ export class MapComponent implements OnInit, OnDestroy {
     }));
   }
 
+  registerMapListeners(): void {
+    if(!this.map) { return; }
+
+    this.map.on('moveend', () => {
+      this.showMarkers();
+    });
+  }
+
   showMarkers(): void {
-    this.mapApiService.getFriends()
+    if(!this.map || !this.user) { return; }
+
+    this.mapApiService.getFriends(this.map.getBoundingBox())
     .pipe(
       map((friends: User[]) => friends.map(f => new Marker(f._id, f.name, f.lat, f.lng, f.isOnline)))
     )

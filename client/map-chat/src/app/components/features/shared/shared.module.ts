@@ -3,10 +3,12 @@ import { UserComponent } from './components/user/user.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { ItBtnDirective } from './directives/it-btn.directive';
 
 @NgModule({
     declarations: [
-        UserComponent
+        UserComponent,
+        ItBtnDirective
     ],
     imports: [
         BrowserModule,
@@ -17,7 +19,8 @@ import { BrowserModule } from '@angular/platform-browser';
         UserComponent,
         BrowserModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        ItBtnDirective
     ]
 })
 export class SharedModule { }

@@ -4,6 +4,7 @@ import { UserMarkerLayer } from './user-marker-layer';
 import { ViewContainerRef } from '@angular/core';
 import { User } from '@features/shared/models/user.model';
 import { SupabaseApiService } from '@features/shared/services/supabase-api.service';
+import { BoundingBox } from '../models/bounding-box.model';
 
 export class BaseMap extends mapboxgl.Map {
     userMarkerLayer: UserMarkerLayer;
@@ -18,8 +19,7 @@ export class BaseMap extends mapboxgl.Map {
     }
 
     addUserMarkers(markers: Marker[], user: User): void {
-        this.userMarkerLayer.removeAllMarkers();
-        this.userMarkerLayer.addMarkers(markers, this, user);
+        this.userMarkerLayer.addAndRetainMarkers(markers, this, user);
     }
 
     removeAllMarkers(): void {
@@ -33,5 +33,10 @@ export class BaseMap extends mapboxgl.Map {
             lat: user.lat,
             lng: user.lng
         });
+    }
+
+    getBoundingBox(): BoundingBox {
+        const bounds = super.getBounds();
+        return new BoundingBox(bounds.getSouth(), bounds.getNorth(), bounds.getWest(), bounds.getEast());
     }
 }

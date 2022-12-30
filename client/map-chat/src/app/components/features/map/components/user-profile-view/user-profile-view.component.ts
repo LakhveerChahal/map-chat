@@ -30,27 +30,22 @@ export class UserProfileViewComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.dataSharingService.getReloadFriendListEvent().subscribe((state: string) => {
-      switch (state) {
-        case constants.active:
-          this.getFriendsList(state);
-          break;
-        case constants.sent:
-          this.getFriendsList(state);
-        break;
-        default:
-          break;
-      }
+    this.subscription.add(this.dataSharingService.getReloadFriendListEvent().subscribe(() => {
+      this.reloadFriendCircleData();
     }));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.user) {
-      this.getUserMetaDataById();
-      this.getFriendsList(constants.active);
-      this.getFriendsList(constants.received);
-      this.getFriendsList(constants.sent);
+      this.reloadFriendCircleData();
     }
+  }
+
+  reloadFriendCircleData(): void {
+    this.getUserMetaDataById();
+    this.getFriendsList(constants.active);
+    this.getFriendsList(constants.received);
+    this.getFriendsList(constants.sent);
   }
 
   getUserMetaDataById(): void {

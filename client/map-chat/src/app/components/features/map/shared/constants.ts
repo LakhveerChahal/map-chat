@@ -24,6 +24,7 @@ export const constants = {
         request: 'request',
         acceptRequest: 'accept-request',
         metadata: 'metadata',
+        markers: 'markers',
     },
     searchText: 'searchText',
     limit: 'limit',

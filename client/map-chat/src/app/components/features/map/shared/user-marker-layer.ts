@@ -10,7 +10,7 @@ import { SupabaseApiService } from '@features/shared/services/supabase-api.servi
     providedIn: 'root'
 })
 export class UserMarkerLayer {
-    markers: mapboxgl.Marker[] = [];
+    markerMap: Map<string, mapboxgl.Marker> = new Map<string, mapboxgl.Marker>();
     static viewContainerRef: ViewContainerRef;
     static supabaseService: SupabaseApiService
 
@@ -23,16 +23,30 @@ export class UserMarkerLayer {
     }
 
     public removeAllMarkers(): void {
-        this.markers.forEach((marker) => marker.remove());
-        this.markers = [];
+        this.markerMap.forEach((marker) => marker.remove());
+        this.markerMap = new Map();
     }
 
-    public addMarkers(markers: Marker[], map: BaseMap, user: User): void {
-        for (let index = 0; index < markers.length; index++) {
-            const marker = markers[index];
-            const divEl = UserMarkerLayer.getMarkerElement(marker);
-            this.markers.push(UserMarkerLayer.getMarkerInstance(divEl, marker, user).addTo(map));
-        }
+    public addAndRetainMarkers(markersToRetain: Marker[], map: BaseMap, user: User): void {
+        const newMarkerMap = new Map<string, mapboxgl.Marker>();
+        markersToRetain.forEach((marker: Marker) => {
+            const foundMarker = this.markerMap.get(marker.id);
+            if(foundMarker) {
+                newMarkerMap.set(marker.id, foundMarker);
+                this.markerMap.delete(marker.id);
+            } else {
+                const divEl = UserMarkerLayer.getMarkerElement(marker);
+                newMarkerMap.set(marker.id, UserMarkerLayer.getMarkerInstance(divEl, marker, user).addTo(map));
+            }
+        });
+        // after completion of forEach, remaining markers in markerMap are dangling markers, so remove them from map
+        this.removeRemainingMarkersFromMap();
+
+        this.markerMap = newMarkerMap;
+    }
+
+    removeRemainingMarkersFromMap(): void {
+        this.markerMap.forEach((marker) => marker.remove());
     }
 
     public static getMarkerInstance(divEl: HTMLDivElement, marker: Marker, user: User): mapboxgl.Marker {
@@ -43,6 +57,7 @@ export class UserMarkerLayer {
             });
 
         if(!UserMarkerLayer.isUserOwnMarker(marker, user)) { 
+            // create chat popup for friend markers only
             markerInstance.setPopup(UserMarkerLayer.getPopUpInstance(marker, user));
         } else {
             

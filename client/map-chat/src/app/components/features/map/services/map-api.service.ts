@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User, UserMetaData } from '@features/shared/models/user.model';
 import { UserPreferenceService } from './user-preference.service';
+import { BoundingBox } from '../models/bounding-box.model';
 import { constants } from '../shared/constants';
 
 @Injectable({
@@ -18,12 +19,15 @@ export class MapApiService {
     ) { }
 
     // TODO: this should be bounding box constrained
-    getFriends(): Observable<User[]> {
-        const authToken = this.userPreferenceService.getSessionToken();
-        return this.http.get<User[]>(this.urlFormationService.getFriendsBaseUrl() + `/${constants.active}`, {
-            headers: {
-                token: authToken
-            }
+    getFriends(boundingBox: BoundingBox): Observable<User[]> {
+        let params = new HttpParams();
+        params = params.append('minLat', boundingBox.minLat);
+        params = params.append('maxLat', boundingBox.maxLat);
+        params = params.append('minLng', boundingBox.minLng);
+        params = params.append('maxLng', boundingBox.maxLng);
+
+        return this.http.get<User[]>(this.urlFormationService.getActiveFriendsMarkers(), {
+            params
         });
     }
 
@@ -33,11 +37,7 @@ export class MapApiService {
         params = params.append(constants.limit, limit);
         params = params.append(constants.offset, offset);
 
-        const authToken = this.userPreferenceService.getSessionToken();
         return this.http.get<User[]>(this.urlFormationService.getSearchedPeopleUrl(), {
-            headers: {
-                token: authToken
-            },
             params,
         });
     }
