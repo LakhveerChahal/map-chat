@@ -7,10 +7,12 @@ const router = express.Router();
 router.use('/', hardAuthorization);
 router.use('/request/:friendId', hardAuthorization);
 router.use('/accept-request/:friendId', hardAuthorization);
+router.use('/undo-request/:friendId', hardAuthorization);
 
 router.route('/:state').get(friendsController.getFriends);
 router.route('/markers/active').get(friendsController.getActiveFriendsMarkers);
 router.route('/request/:friendId').put(friendsController.putFriendRequest);
 router.route('/accept-request/:friendId').put(friendsController.acceptFriendRequest);
+router.route('/undo-request/:friendId').put(friendsController.undoFriendRequest);
 
 module.exports = router;

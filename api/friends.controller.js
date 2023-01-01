@@ -53,9 +53,26 @@ const acceptFriendRequest = async (req, res) => {
     }
 }
 
+const undoFriendRequest = async (req, res) => {
+    const userId = getUserIdFromReq(req);
+    const friendIdToUndo = req.params.friendId;
+
+    if (!userId || !friendIdToUndo) {
+        res.status(401).send();
+    }
+
+    const result = await friendsService.undoFriendRequest(friendIdToUndo, userId);
+    if (result) {
+        res.status(201).send();
+    } else {
+        res.status(500).send();
+    }
+}
+
 module.exports = {
     getFriends,
     getActiveFriendsMarkers,
     putFriendRequest,
-    acceptFriendRequest
+    acceptFriendRequest,
+    undoFriendRequest
 };

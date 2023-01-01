@@ -60,6 +60,10 @@ export class UrlFormationService {
     getPutAcceptFriendRequestUrl(friendId: string): string {
         return `${this.getFriendsBaseUrl()}/${constants.url.acceptRequest}/${friendId}`;
     }
+
+    getPutUndoFriendRequestUrl(friendId: string): string {
+        return `${this.getFriendsBaseUrl()}/${constants.url.undoRequest}/${friendId}`;
+    }
     // Friend Urls End
 
     // People Urls

@@ -1,16 +1,28 @@
 <div class="people-list-wrapper" *ngIf="peopleList.length > 0">
     <ng-container *ngFor="let person of peopleList">
         <div class="row">
+            <img class="avatar-img" [src]="supabase.getPublicImageUrl(person._id)" [alt]="person.name"
+                [ngClass]="{'friend-online': person.isOnline, 'friend-offline': !person.isOnline}">
             <div>
                 {{ person.name }}
             </div>
 
-            <div *ngIf="loggedInUser != null && loggedInUser._id != person._id">
-                <button *ngIf="!person.isFriend && !person.friendReqSent && !person.friendReqReceived" 
-                    (click)="addFriend(person)">Add Friend</button>
-                <p *ngIf="person.friendReqSent">Friend Request Sent</p>
-                <button *ngIf="person.friendReqReceived"
-                    (click)="acceptFriendRequest(person)">Accept Friend Request</button>
+            <div *ngIf="loggedInUser != null && loggedInUser._id != person._id" class="right-align">
+                <span ItBtn class="material-symbols-outlined" title="Send Friend Request"
+                    *ngIf="!person.isFriend && !person.friendReqSent && !person.friendReqReceived"
+                    (click)="sendFriendRequest(person)">
+                    person_add
+                </span>
+
+                <span ItBtn class="material-symbols-outlined" title="Undo Friend Request"
+                    *ngIf="person.friendReqSent" (click)="undoFriendRequest(person)">
+                    delete
+                </span>
+
+                <span ItBtn class="material-symbols-outlined" title="Accept Friend Request"
+                    *ngIf="person.friendReqReceived" (click)="acceptFriendRequest(person)">
+                    handshake
+                </span>
             </div>
 
         </div>

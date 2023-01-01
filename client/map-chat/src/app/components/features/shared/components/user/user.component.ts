@@ -3,6 +3,7 @@ import { CommonApiService } from '@features/shared/services/common-api.service';
 import { User } from '@features/shared/models/user.model';
 import { UserPreferenceService } from '@features/map/services/user-preference.service';
 import { DataSharingService } from '@features/map/services/data-sharing.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-user',

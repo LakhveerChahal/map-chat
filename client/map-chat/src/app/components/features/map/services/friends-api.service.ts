@@ -25,6 +25,10 @@ export class FriendsApiService {
         return this.http.put<void>(this.urlFormationService.getPutAcceptFriendRequestUrl(friendId), {});
     }
 
+    undoFriendRequest(friendId: string): Observable<void> {
+        return this.http.put<void>(this.urlFormationService.getPutUndoFriendRequestUrl(friendId), {});
+    }
+
     getFriends(state: string): Observable<User[]> {
         const authToken = this.userPreferenceService.getSessionToken();
         return this.http.get<User[]>(this.urlFormationService.getFriendsBaseUrl() + `/${state}`, {

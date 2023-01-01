@@ -6,6 +6,7 @@ import { MapApiService } from '@features/map/services/map-api.service';
 import { constants } from '@features/map/shared/constants';
 import { takeUntil } from 'rxjs/operators';
 import { FriendsApiService } from '@features/map/services/friends-api.service';
+import { SupabaseApiService } from '@features/shared/services/supabase-api.service';
 
 @Component({
   selector: 'app-search-result',
@@ -24,9 +25,9 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   constructor(
     public dataSharingService: DataSharingService,
     public mapApiService: MapApiService,
-    public friendsApiService: FriendsApiService
+    public friendsApiService: FriendsApiService,
+    public supabase: SupabaseApiService
   ) { }
-
 
   ngOnInit(): void {
     this.registerSubscriptions();
@@ -66,17 +67,28 @@ export class SearchResultComponent implements OnInit, OnDestroy {
       });
   }
 
-  addFriend(person: User): void {
+  // World is too small
+  sendFriendRequest(person: User): void {
     this.friendsApiService.sendFriendRequest(person._id).subscribe(() => {
       person.friendReqSent = true;
       this.dataSharingService.setReloadFriendList();
     });
   }
 
+  // YAY!
   acceptFriendRequest(person: User): void {
     this.friendsApiService.acceptFriendRequest(person._id).subscribe(() => {
       person.isFriend = true;
       person.friendReqReceived = false;
+      this.dataSharingService.setReloadFriendList();
+    });
+  }
+
+  // bad thing to do honestly :)
+  undoFriendRequest(person: User): void {
+    this.friendsApiService.undoFriendRequest(person._id).subscribe(() => {
+      person.isFriend = false;
+      person.friendReqSent = false;
       this.dataSharingService.setReloadFriendList();
     });
   }

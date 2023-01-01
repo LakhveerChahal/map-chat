@@ -31,7 +31,7 @@ const getSearchedPeople = async (searchText, offset, limit, userId) => {
 
 const updateFriendField = async (people, userId) => {
     try {
-        // logic can be improved
+        // expensive logic, can be improved
         for (let i = 0; i < people.length; i++) {
             const p = people[i];
             console.log(p._id.valueOf());

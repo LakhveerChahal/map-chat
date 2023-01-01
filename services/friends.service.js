@@ -86,9 +86,30 @@ const acceptFriendRequest = async (friendId, userId) => {
     }
 }
 
+const undoFriendRequest = async (friendIdToUndo, userId) => {
+    try {
+        
+        // remove friendId from user's sent request array
+        await User.findByIdAndUpdate(userId, {
+            $pull: { 'sentReq': friendIdToUndo }
+        });
+
+        // remove userId from friend's received request array
+        await User.findByIdAndUpdate(friendIdToUndo, {
+            $pull: { 'receivedReq': userId }
+        });
+
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
+
 module.exports = {
     getFriends,
     putFriendRequest,
     acceptFriendRequest,
     getFriendsInBoundingBox,
+    undoFriendRequest
 };

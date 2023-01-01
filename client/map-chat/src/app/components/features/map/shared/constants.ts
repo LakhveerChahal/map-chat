@@ -23,6 +23,7 @@ export const constants = {
         peopleSearch: 'search',
         request: 'request',
         acceptRequest: 'accept-request',
+        undoRequest: 'undo-request',
         metadata: 'metadata',
         markers: 'markers',
     },

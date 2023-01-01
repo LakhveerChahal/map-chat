@@ -1,6 +1,7 @@
 .people-list-wrapper {
     background-color: white;
     padding: 0.5em;
+    border-radius: 1em;
 
     .row:not(:last-child) {
         padding-bottom: 0.5em;
@@ -8,7 +9,19 @@
 
     .row {
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+        gap: 0.5em;
+        margin: 0 0.5em;
         font-family: Georgia, 'Times New Roman', Times, serif;
+
+        .avatar-img {
+            border-radius: 50%;
+            height: 3em;
+            width: 3em;
+        }
+
+        .right-align {
+            margin-left: auto;
+        }
     }
 }
