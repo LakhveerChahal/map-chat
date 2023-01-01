@@ -22,7 +22,6 @@ export class MapLayerComponent implements OnInit, OnChanges, OnDestroy {
     public mapApiService: MapApiService
   ) { }
   
-  
   ngOnInit(): void {
     this.subscription.add(
       this.dataSharingService.getSocket().subscribe((socket: Socket | null) => {

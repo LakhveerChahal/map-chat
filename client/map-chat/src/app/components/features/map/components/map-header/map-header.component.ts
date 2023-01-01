@@ -37,7 +37,7 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
 
   establishSocket(): void {
     // socket already exists
-    if(this.socket) { return; }
+    if (this.socket) { return; }
 
     this.socket = io(environment.baseUrl, {
       reconnectionAttempts: 0,
@@ -51,10 +51,10 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
 
 
   registerListeners(): void {
-    if(!this.socket) { return; }
+    if (!this.socket) { return; }
 
     this.socket.on('connect', () => {
-      if(!this.socket) { return; }
+      if (!this.socket) { return; }
 
       this.removeCustomListeners(this.socket);
       this.dataSharingService.shareSocket(this.socket);
@@ -69,33 +69,29 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
 
     this.socket.on('users', (socketMapArray: any[]) => {
       const socketMap = new Map<string, string>(socketMapArray);
-      
+
       this.dataSharingService.setSocketMap(socketMap);
     })
   }
 
   disconnectSocket(): void {
-    if(!this.socket) { return; }
+    if (!this.socket) { return; }
 
     this.removeCustomListeners(this.socket);
     this.socket.disconnect();
     this.socket = null;
-    
+
     this.dataSharingService.shareSocket(this.socket);
   }
 
-  toggleSignIn(): void {
-    if (!this.showSignIn) {
-      // Signing Out...
-      this.commonApiService.signOut().subscribe(() => {
-        this.userPreferenceService.clearSessionToken();
-      });
-      this.disconnectSocket();
-      this.dataSharingService.setLoggedInUser(null);
-      this.showSignIn = true;
-    } else {
-      this.showSignInDialog = true;
-    }
+  signOut(): void {
+    // Signing Out...
+    this.commonApiService.signOut().subscribe(() => {
+      this.userPreferenceService.clearSessionToken();
+    });
+    this.disconnectSocket();
+    this.dataSharingService.setLoggedInUser(null);
+    this.showSignIn = true;
   }
 
   // can get called from datashareingservice and Output event at the same time

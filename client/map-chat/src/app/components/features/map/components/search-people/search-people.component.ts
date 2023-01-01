@@ -1,9 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { constants } from '@features/map/shared/constants';
-import { MapApiService } from '@features/map/services/map-api.service';
-import { User } from '@features/shared/models/user.model';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { DataSharingService } from '@features/map/services/data-sharing.service';
 
 @Component({
@@ -37,29 +34,12 @@ export class SearchPeopleComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((searchString: string) => {
         this.dataSharingService.setPeopleSearchString(searchString);
       })
-    );
+    );  
 
     this.peopleSearchInput.nativeElement.onkeyup = () => {
-      const searchValue = this.peopleSearchInput?.nativeElement.value;
-      searchValue && this.searchEmitter.next(searchValue);
+      const searchValue: string = this.peopleSearchInput?.nativeElement.value || '';
+      this.searchEmitter.next(searchValue);
     };
-
-    this.subscription.add(
-      this.dataSharingService.getPeopleSearchString().subscribe((searchString: string) => {
-        const searchValue = this.peopleSearchInput?.nativeElement.value;
-
-        if(searchString == '' && searchValue != '') {
-          this.clearSearch();
-        }
-      })
-    );
-  }
-
-  clearSearch(): void {
-    if(this.peopleSearchInput) {
-      this.peopleSearchInput.nativeElement.value = '';
-    }
-    this.searchEmitter.next('');
   }
 
   ngOnDestroy(): void {

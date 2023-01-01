@@ -40,6 +40,12 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(
+      this.dataSharingService.getUserProfilePanelEvent().subscribe((showPanel: boolean) => {
+        this.searchPeople('');
+      })
+    );
+
+    this.subscription.add(
       this.dataSharingService.getPeopleSearchString().subscribe((searchString: string) => {
         this.newSearchEmitter.next();
         this.searchPeople(searchString);
@@ -56,7 +62,6 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     this.mapApiService.getPeopleOnSearch(searchString, this.limit, this.offset)
       .pipe(takeUntil(this.newSearchEmitter))
       .subscribe((people: User[]) => {
-        console.log(people);
         this.peopleList = people;
       });
   }

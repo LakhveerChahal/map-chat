@@ -14,6 +14,7 @@ export class DataSharingService {
     private reloadFriendList = new Subject<void>();
     private mapCenter = new Subject<User>();
     private reloadAvatar = new Subject<void>();
+    private userProfileEvent = new Subject<boolean>();
 
     public getLoggedInUser(): BehaviorSubject<User | null> {
         return this.loggedInUser;
@@ -69,5 +70,13 @@ export class DataSharingService {
 
     public setReloadAvatarEvent(): void {
         this.reloadAvatar.next();
+    }
+
+    setUserProfilePanelEvent(showPanel: boolean): void {
+        this.userProfileEvent.next(showPanel);
+    }
+
+    getUserProfilePanelEvent(): Subject<boolean> {
+        return this.userProfileEvent;
     }
 }

@@ -13,7 +13,7 @@ export class UserProfileComponent implements OnInit, OnChanges, OnDestroy {
   @Input() loggedInUser: User | null = null;
   avatarUrl: string = '';
   subscription = new Subscription();
-
+  showUserProfilePanel: boolean = false;
 
   constructor(
     public supabase: SupabaseApiService, // used in template
@@ -24,6 +24,13 @@ export class UserProfileComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription.add(this.dataSharingService.getReloadAvatarEvent().subscribe(() => {
       this.setAvatarUrl();
     }));
+
+    // close user profile panel when searching friends
+    this.subscription.add(
+      this.dataSharingService.getPeopleSearchString().subscribe(() => {
+        this.showUserProfilePanel && this.openUserProfile(!this.showUserProfilePanel);
+      })
+    );
   }
   
   ngOnChanges(changes: SimpleChanges): void {
@@ -41,6 +48,11 @@ export class UserProfileComponent implements OnInit, OnChanges, OnDestroy {
     }, 1000);
   }
   
+  openUserProfile(showPanel: boolean): void {
+    this.showUserProfilePanel = showPanel;
+    this.dataSharingService.setUserProfilePanelEvent(this.showUserProfilePanel);
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

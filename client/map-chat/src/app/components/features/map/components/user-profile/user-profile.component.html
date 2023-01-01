@@ -1,6 +1,3 @@
 <ng-container *ngIf="!!loggedInUser">
-    <img [src]="avatarUrl" [alt]="loggedInUser.name" class="user-image">
-    <span class="welcome-section">
-        Welcome {{ loggedInUser.name }}
-    </span>
+    <img [src]="avatarUrl" [alt]="loggedInUser.name" class="user-image" (click)="openUserProfile(!showUserProfilePanel)">
 </ng-container>
