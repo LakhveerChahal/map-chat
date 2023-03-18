@@ -9,7 +9,7 @@ const getBaseUrl = (): string => {
     return 'https://lakhveerchahal-super-duper-computing-9j7jvx4w4pw29xp6-3000.preview.app.github.dev';
   }
   if(window.location.href.match(/gitpod/) !== null) {
-    return 'https://3000-lakhveerchahal-mapchat-98yso9v04p0.ws-us83.gitpod.io';
+    return 'https://3000-lakhveerchahal-mapchat-meg8u1w98ny.ws-us90.gitpod.io';
   }
   return 'http://localhost:3000';
 }
